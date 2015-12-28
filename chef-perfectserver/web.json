@@ -1,0 +1,27 @@
+{
+    "run_list": [
+	"recipe[apt]",
+	"recipe[ubuntu]",
+	"recipe[yum]",
+	"recipe[yum-epel]",
+	"recipe[smf]",
+	"recipe[apache2]", 
+	"recipe[build-essential]",
+	"recipe[imagemagick]",
+	"recipe[openssl]",
+	"recipe[xml]",
+	"recipe[php]",
+	"recipe[php-fpm]", 
+	"recipe[phpmyadmin]",  
+	"recipe[postfixgld]",  
+	"recipe[roundcube]",        
+	"recipe[certificate]",      
+	"recipe[git]",       
+	"recipe[iptables]",     
+	"recipe[ohai]",      
+	"recipe[postfix]",     
+	"recipe[pure-ftpd]",    
+	"recipe[runit]",
+	"recipe[perfectserver]"
+    ]
+}
