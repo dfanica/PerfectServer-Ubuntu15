@@ -16,7 +16,6 @@
 		"recipe[php::module_gd]",
 		"recipe[php::module_apc]",
 		"recipe[postfix]",
-		"recipe[postfixgld]",
 		"recipe[pure-ftpd]",
 		"recipe[openssl]",
 		"recipe[git]",
