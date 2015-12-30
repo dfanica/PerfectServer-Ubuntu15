@@ -1,10 +1,9 @@
 {
     "run_list": [
-        "recipe[ispconfig3::source_list]",
         "recipe[apt]",
-        "recipe[ntp]",
-        "recipe[ispconfig3::prepare]",
+        "recipe[ispconfig3]",
         "recipe[apparmor]",
+        "recipe[ntp]",
         "recipe[sendmail::remove]"
     ]
 }
