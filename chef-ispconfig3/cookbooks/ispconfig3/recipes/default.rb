@@ -16,7 +16,7 @@ end
 include_recipe "apt"
 
 execute '/bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash.' do
-    command 'dpkg-reconfigure --no dash'
+    command 'dpkg-reconfigure dash'
     action :nothing
 end
 
