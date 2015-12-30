@@ -7,15 +7,10 @@
 # All rights reserved
 #
 
-# Edit /etc/apt/sources.list. Make sure that the universe and multiverse repositories are enabled.
-template ::File.join(node['ispconfig3']['sources_list_path'], 'sources.list') do
-    source 'sources.list.erb'
-end
-
 # update the system
 # include_recipe "apt"
-execute 'apt-get update && upgrade' do
-    command 'apt-get update && apt-get upgrade -y'
+execute 'apt-get upgrade' do
+    command 'apt-get upgrade -y'
     action :run
 end
 
@@ -43,20 +38,6 @@ end
 %w{
     ntp
     ntpdate
-    postfix
-    postfix-mysql
-    postfix-doc
-    mariadb-client
-    mariadb-server
-    openssl
-    getmail4
-    rkhunter
-    binutils
-    dovecot-imapd
-    dovecot-pop3d
-    dovecot-mysql
-    dovecot-sieve
-    sudo
 }.each do |pkg|
     package pkg do
         action :install
