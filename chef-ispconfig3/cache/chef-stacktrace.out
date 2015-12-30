@@ -1,0 +1,71 @@
+Generated at 2015-12-30 17:34:35 +0100
+Mixlib::ShellOut::ShellCommandFailed: execute[/bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash.] (ispconfig3::default line 22) had an error: Mixlib::ShellOut::ShellCommandFailed: Expected process to exit with [0], but received '255'
+---- Begin output of dpkg-reconfigure dash ----
+STDOUT: [?1049h[1;24r[4l(B[m[37m[40m[1;24r[H[2J[1;1H[35m[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[1;1H[33m[42mPackage configuration[7;2H[34m[40m┌───────────────────────────┤ [31mConfiguring dash[34m ├────────────────────────────┐[8;2H│[33m                                                                           [34m│[32m [9;2H[34m│[33m [36m[42mThe system shell is the default command interpreter for shell scripts.   [33m[40m [34m│[32m [10;2H[34m│[33m [36m[42m                                                                         [33m[40m [34m│[32m [11;2H[34m│[33m [36m[42mUsing dash as the system shell will improve the system's overall         [33m[40m [34m│[32m [12;2H[34m│[33m [36m[42mperformance. It does not alter the shell presented to interactive users. [33m[40m [34m│[32m [13;2H[34m│[33m [36m[42m                                                                         [33m[40m [34m│[32m [14;2H[34m│[33m [36m[42mUse dash as the default system shell (/bin/sh)?                          [33m[40m [34m│[32m [15;2H[34m│[33m                                                                           [34m│[32m [16;2H[34m│[33m                    [37m[41m<Yes>[33m[40m                       [36m[43m<No>[33m[40m                       [34m│[32m [17;2H[34m│[33m                                                                           [34m│[32m [18;2H[34m└───────────────────────────────────────────────────────────────────────────┘[32m [19;3H                                                                             [16;24H[?12l[?25h[24;1H[37m(B[m[39;49m[K[?1049l
+STDERR: Failed to open terminal.debconf: whiptail output the above errors, giving up!
+---- End output of dpkg-reconfigure dash ----
+Ran dpkg-reconfigure dash returned 255
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.5/lib/mixlib/shellout.rb:289:in `invalid!'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/mixlib-shellout-2.2.5/lib/mixlib/shellout.rb:276:in `error!'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/mixin/shell_out.rb:56:in `shell_out!'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider/execute.rb:62:in `block in action_run'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/mixin/why_run.rb:52:in `call'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/mixin/why_run.rb:52:in `add_action'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider.rb:175:in `converge_by'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider/execute.rb:60:in `action_run'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider.rb:144:in `run_action'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/resource.rb:596:in `run_action'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/runner.rb:74:in `run_action'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/runner.rb:106:in `block (2 levels) in converge'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/runner.rb:106:in `each'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/runner.rb:106:in `block in converge'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/resource_collection/resource_list.rb:83:in `block in execute_each_resource'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/resource_collection/stepable_iterator.rb:116:in `call'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/resource_collection/stepable_iterator.rb:116:in `call_iterator_block'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/resource_collection/stepable_iterator.rb:85:in `step'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/resource_collection/stepable_iterator.rb:104:in `iterate'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/resource_collection/stepable_iterator.rb:55:in `each_with_index'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/resource_collection/resource_list.rb:81:in `execute_each_resource'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/runner.rb:105:in `converge'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/client.rb:658:in `block in converge'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/client.rb:653:in `catch'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/client.rb:653:in `converge'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/client.rb:692:in `converge_and_save'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/client.rb:271:in `run'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/application.rb:261:in `block in fork_chef_client'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/application.rb:249:in `fork'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/application.rb:249:in `fork_chef_client'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/application.rb:215:in `block in run_chef_client'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/local_mode.rb:44:in `with_server_connectivity'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/application.rb:203:in `run_chef_client'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/application/solo.rb:286:in `block in interval_run_chef_client'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/application/solo.rb:275:in `loop'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/application/solo.rb:275:in `interval_run_chef_client'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/application/solo.rb:253:in `run_application'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/application.rb:58:in `run'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/bin/chef-solo:25:in `<top (required)>'
+/usr/bin/chef-solo:54:in `load'
+/usr/bin/chef-solo:54:in `<main>'
