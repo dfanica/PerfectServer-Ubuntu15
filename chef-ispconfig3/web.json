@@ -4,6 +4,7 @@
         "recipe[ispconfig3]",
         "recipe[apparmor]",
         "recipe[ntp]",
-        "recipe[sendmail::remove]"
+        "recipe[sendmail::remove]",
+        "recipe[postfix]"
     ]
 }
