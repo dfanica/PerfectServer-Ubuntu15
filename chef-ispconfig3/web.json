@@ -2,7 +2,7 @@
     "run_list": [
         "recipe[ispconfig3::source_list]",
         "recipe[apt]",
-        "recipe[ispconfig3::prepare]",
-        "recipe[ntp]"
+        "recipe[ntp]",
+        "recipe[ispconfig3::prepare]"
     ]
 }
