@@ -1,5 +1,6 @@
 {
     "run_list": [
-        "recipe[ispconfig3]"
+        "recipe[apt]",
+        "recipe[ispconfig3::prepare]"
     ]
 }
