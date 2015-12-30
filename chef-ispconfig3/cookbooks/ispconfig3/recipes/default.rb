@@ -21,8 +21,7 @@ end
 
 # /bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash.'
 link '/bin/sh' do
-  # to '/bin/bash'
-  to '/bin/dash'
+  to 'bash'
   link_type :symbolic
 end
 
