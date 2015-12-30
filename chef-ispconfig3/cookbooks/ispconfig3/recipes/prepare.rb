@@ -12,6 +12,7 @@
 execute 'apt-get update'
 execute 'apt-get upgrade' do
     command 'apt-get upgrade -y'
+    ignore_failure true
     action :run
 end
 
@@ -33,14 +34,4 @@ dpkg_package "apparmor-utils" do action :remove end
 execute 'Stop and remove sendmail' do
     command 'service sendmail stop; update-rc.d -f sendmail remove'
     action :nothing
-end
-
-# Install packages
-%w{
-    ntp
-    ntpdate
-}.each do |pkg|
-    package pkg do
-        action :install
-    end
 end
