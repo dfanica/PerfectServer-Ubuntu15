@@ -3,7 +3,8 @@
         "recipe[ispconfig3::source_list]",
         "recipe[apt]",
         "recipe[ntp]",
+        "recipe[ispconfig3::prepare]",
         "recipe[apparmor]",
-        "recipe[ispconfig3::prepare]"
+        "recipe[sendmail::remove]"
     ]
 }
