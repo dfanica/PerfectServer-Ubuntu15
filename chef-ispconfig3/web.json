@@ -6,7 +6,6 @@
         "recipe[ntp]",
         "recipe[sendmail::remove]",
         "recipe[postfix]",
-        "recipe[mariadb::client]",
-        "recipe[mariadb::server]"
+        "recipe[ispconfig3::postfix]"
     ]
 }
