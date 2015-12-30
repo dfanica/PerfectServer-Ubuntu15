@@ -16,7 +16,7 @@ end
 include_recipe "apt"
 
 execute '/bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash.' do
-    command 'dpkg-reconfigure --yes dash'
+    command 'dpkg-reconfigure --no dash'
     action :nothing
 end
 
@@ -24,9 +24,10 @@ bash 'Disable AppArmor' do
     code <<-END
         service apparmor stop
         update-rc.d -f apparmor remove
-        apt-get remove apparmor apparmor-utils
     END
 end
+package "apparmor" do action :remove end
+package "apparmor-utils" do action :remove end
 
 execute 'Stop and remove sendmail' do
     command 'service sendmail stop; update-rc.d -f sendmail remove'
