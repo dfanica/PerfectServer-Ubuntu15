@@ -9,6 +9,7 @@
 
 # update the system
 # include_recipe "apt"
+execute 'apt-get update'
 execute 'apt-get upgrade' do
     command 'apt-get upgrade -y'
     action :run
