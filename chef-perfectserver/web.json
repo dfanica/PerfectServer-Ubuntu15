@@ -23,6 +23,7 @@
 		"recipe[ark]",
 		"recipe[git]",
 		"recipe[perfectserver]",
-		"recipe[roundcube]"
+		"recipe[roundcube]",
+		"recipe[roundcube::nginx]"
     ]
 }
