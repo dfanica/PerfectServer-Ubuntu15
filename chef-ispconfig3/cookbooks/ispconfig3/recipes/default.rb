@@ -19,9 +19,11 @@ execute 'apt-get update && upgrade' do
     action :run
 end
 
-execute '/bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash.' do
-    command 'dpkg-reconfigure dash'
-    action :run
+# /bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash.'
+link '/bin/sh' do
+  # to '/bin/bash'
+  to '/bin/dash'
+  link_type :symbolic
 end
 
 bash 'Disable AppArmor' do
