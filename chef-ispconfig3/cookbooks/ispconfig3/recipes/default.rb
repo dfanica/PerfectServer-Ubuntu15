@@ -26,8 +26,8 @@ bash 'Disable AppArmor' do
         update-rc.d -f apparmor remove
     END
 end
-package "apparmor" do action :remove end
-package "apparmor-utils" do action :remove end
+dpkg_package "apparmor" do action :remove end
+dpkg_package "apparmor-utils" do action :remove end
 
 execute 'Stop and remove sendmail' do
     command 'service sendmail stop; update-rc.d -f sendmail remove'
