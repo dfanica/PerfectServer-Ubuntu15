@@ -15,9 +15,12 @@
 		"recipe[phpmyadmin]",
 		"recipe[php::module_curl]",
 		"recipe[php::module_apc]",
+		"recipe[php-fpm]",
 		"recipe[postfix]",
 		"recipe[pure-ftpd]",
 		"recipe[openssl]",
+		"recipe[nginx]",
+		"recipe[ark]",
 		"recipe[git]",
 		"recipe[perfectserver]",
 		"recipe[roundcube]"
