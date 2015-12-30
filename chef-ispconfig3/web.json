@@ -3,6 +3,7 @@
         "recipe[ispconfig3::source_list]",
         "recipe[apt]",
         "recipe[ntp]",
+        "recipe[apparmor]",
         "recipe[ispconfig3::prepare]"
     ]
 }

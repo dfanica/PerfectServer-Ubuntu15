@@ -22,14 +22,14 @@ link '/bin/sh' do
   link_type :symbolic
 end
 
-bash 'Disable AppArmor' do
-    code <<-END
-        service apparmor stop
-        update-rc.d -f apparmor remove
-    END
-end
-dpkg_package "apparmor" do action :remove end
-dpkg_package "apparmor-utils" do action :remove end
+# bash 'Disable AppArmor' do
+#     code <<-END
+#         service apparmor stop
+#         update-rc.d -f apparmor remove
+#     END
+# end
+# dpkg_package "apparmor" do action :remove end
+# dpkg_package "apparmor-utils" do action :remove end
 
 execute 'Stop and remove sendmail' do
     command 'service sendmail stop; update-rc.d -f sendmail remove'
