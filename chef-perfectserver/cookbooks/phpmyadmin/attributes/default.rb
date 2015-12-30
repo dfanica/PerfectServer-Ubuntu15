@@ -17,13 +17,11 @@
 # limitations under the License.
 #
 
-default['phpmyadmin']['version'] = '4.3.13.1'
-default['phpmyadmin']['checksum'] = '2e5c2ca358d9510c793bb709338f0836c56f4c151018ad36a74da1d32df9fcd3'
-default['phpmyadmin']['mirror'] = 'https://files.phpmyadmin.net/phpMyAdmin/'
-default['phpmyadmin']['server_name'] = node['fqdn']
+default['phpmyadmin']['version'] = '4.0.8'
+default['phpmyadmin']['checksum'] = '7c00d28af02c45d68bacac53fc23ebcfd180b4959f9933422f35015c2091030b'
+default['phpmyadmin']['mirror'] = 'http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin'
 
 default['phpmyadmin']['fpm'] = true
-default['phpmyadmin']['stand_alone'] = true
 
 default['phpmyadmin']['home'] = '/opt/phpmyadmin'
 default['phpmyadmin']['user'] = 'phpmyadmin'
@@ -41,16 +39,10 @@ when 'debian'
 when 'rhel'
   default['phpmyadmin']['upload_dir'] = '/var/lib/php/uploads'
   default['phpmyadmin']['save_dir'] = '/var/lib/php/uploads'
-end
+end 
 default['phpmyadmin']['maxrows'] = 100
 default['phpmyadmin']['protect_binary'] = 'blob'
 default['phpmyadmin']['default_lang'] = 'en'
 default['phpmyadmin']['default_display'] = 'horizontal'
 default['phpmyadmin']['query_history'] = true
 default['phpmyadmin']['query_history_size'] = 100
-
-default['phpmyadmin']['config_template'] = 'config.inc.php.erb'
-default['phpmyadmin']['config_template_cookbook'] = 'phpmyadmin'
-
-default['phpmyadmin']['force_ssl'] = false
-

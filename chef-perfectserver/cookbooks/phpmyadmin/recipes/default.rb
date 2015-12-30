@@ -17,33 +17,7 @@
 # limitations under the License.
 #
 
-require 'etc'
 require 'digest/sha1'
-
-# PHP Recipe includes we already know PHPMyAdmin needs
-if node['phpmyadmin']['stand_alone'] then
-	include_recipe 'php'
-	include_recipe 'php::module_mbstring'
-	include_recipe 'php::module_mcrypt'
-	include_recipe 'php::module_gd'
-	include_recipe 'php::module_mysql'
-
-	directory node['phpmyadmin']['upload_dir'] do
-		owner 'root'
-		group 'root'
-		mode 01777
-		recursive true
-		action :create
-	end
-
-	directory node['phpmyadmin']['save_dir'] do
-		owner 'root'
-		group 'root'
-		mode 01777
-		recursive true
-		action :create
-	end
-end
 
 home = node['phpmyadmin']['home']
 user = node['phpmyadmin']['user']
@@ -60,8 +34,7 @@ user user do
 	gid group
 	home home
 	shell '/usr/sbin/nologin'
-	supports :manage_home => true
-	not_if { (! Etc.getpwnam(user).gecos.eql?('PHPMyAdmin User')) rescue false }
+	supports :manage_home => true 
 end
 
 directory home do
@@ -72,14 +45,28 @@ directory home do
 	action :create
 end
 
+directory node['phpmyadmin']['upload_dir'] do
+	owner 'root'
+	group 'root'
+	mode 01777
+	recursive true
+	action :create
+end
+
+directory node['phpmyadmin']['save_dir'] do
+	owner 'root'
+	group 'root'
+	mode 01777
+	recursive true
+	action :create
+end
+
 # Download the selected PHPMyAdmin archive
 remote_file "#{Chef::Config['file_cache_path']}/phpMyAdmin-#{node['phpmyadmin']['version']}-all-languages.tar.gz" do
   owner user
   group group
   mode 00644
-	retries 5
-	retry_delay 2
-  action :create
+  action :create_if_missing
   source "#{node['phpmyadmin']['mirror']}/#{node['phpmyadmin']['version']}/phpMyAdmin-#{node['phpmyadmin']['version']}-all-languages.tar.gz"
   checksum node['phpmyadmin']['checksum']
 end
@@ -112,10 +99,9 @@ unless Chef::Config[:solo] || node['phpmyadmin']['blowfish_secret']
 end
 
 template "#{home}/config.inc.php" do
-	source node['phpmyadmin']['config_template']
+	source 'config.inc.php.erb'
 	owner user
 	group group
-	cookbook node['phpmyadmin']['config_template_cookbook']
 	mode 00644
 end
 
@@ -134,7 +120,7 @@ if (node['phpmyadmin'].attribute?('fpm') && node['phpmyadmin']['fpm'])
 	  max_spare_servers 8
 	  max_children 8
 	  terminate_timeout (node['php']['ini_settings']['max_execution_time'].to_i + 20)
-	  value_overrides({
+	  value_overrides({ 
 	    :error_log => "#{node['php']['fpm_log_dir']}/phpmyadmin.log"
 	  })
 	end

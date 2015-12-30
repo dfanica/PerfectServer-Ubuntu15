@@ -30,7 +30,7 @@ attribute 'phpmyadmin/checksum',
 attribute 'phpmyadmin/mirror',
   :display_name => 'PHPMyAdmin download mirror',
   :description => 'The desired PMA download mirror',
-  :default => 'https://files.phpmyadmin.net/phpMyAdmin/'
+  :default => 'http://netcologne.dl.sourceforge.net/project/phpmyadmin/phpMyAdmin'
 
 attribute 'phpmyadmin/fpm',
   :display_name => 'PHPMyAdmin FPM instance',

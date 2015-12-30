@@ -12,6 +12,7 @@
 		"recipe[apache2::mod_fcgid]",
 		"recipe[phpmyadmin]",
 		"recipe[php]",
+		"recipe[php::module_mbstring]",
 		"recipe[php::module_curl]",
 		"recipe[php::module_mysql]",
 		"recipe[php::module_gd]",
