@@ -5,6 +5,8 @@
         "recipe[apparmor]",
         "recipe[ntp]",
         "recipe[sendmail::remove]",
-        "recipe[postfix]"
+        "recipe[postfix]",
+        "recipe[mariadb::client]",
+        "recipe[mariadb::server]"
     ]
 }
