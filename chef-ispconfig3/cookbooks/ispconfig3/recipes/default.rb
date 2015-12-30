@@ -16,12 +16,12 @@ end
 # include_recipe "apt"
 execute 'apt-get update && upgrade' do
     command 'apt-get update && apt-get upgrade -y'
-    action :nothing
+    action :run
 end
 
 execute '/bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash.' do
     command 'dpkg-reconfigure -n dash'
-    action :nothing
+    action :run
 end
 
 bash 'Disable AppArmor' do
