@@ -13,10 +13,14 @@ template ::File.join(node['ispconfig3']['sources_list_path'], 'sources.list') do
 end
 
 # update the system
-include_recipe "apt"
+# include_recipe "apt"
+execute 'apt-get update && upgrade' do
+    command 'apt-get update && apt-get upgrade -y'
+    action :nothing
+end
 
 execute '/bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash.' do
-    command 'dpkg-reconfigure --no dash'
+    command 'dpkg-reconfigure -n dash'
     action :nothing
 end
 
