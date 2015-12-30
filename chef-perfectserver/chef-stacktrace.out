@@ -1,17 +1,11 @@
-Generated at 2015-12-30 14:25:16 +0100
-Net::HTTPServerException: remote_file[/root/ps/chef-perfectserver/phpMyAdmin-4.0.8-all-languages.tar.gz] (phpmyadmin::default line 65) had an error: Net::HTTPServerException: 404 "Not Found"
-/opt/chef/embedded/lib/ruby/2.1.0/net/http/response.rb:119:in `error!'
-/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/http.rb:180:in `streaming_request'
-/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider/remote_file/http.rb:60:in `fetch'
-/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider/remote_file/content.rb:71:in `grab_file_from_uri'
-/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider/remote_file/content.rb:56:in `try_multiple_sources'
-/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider/remote_file/content.rb:41:in `file_for_provider'
-/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/file_content_management/content_base.rb:40:in `tempfile'
-/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider/file.rb:462:in `tempfile'
-/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider/file.rb:339:in `do_generate_content'
-/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider/file.rb:150:in `action_create'
-/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider/file.rb:162:in `action_create_if_missing'
-/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider.rb:144:in `run_action'
+Generated at 2015-12-30 15:55:09 +0100
+Chef::Exceptions::EnclosingDirectoryDoesNotExist: template[/etc/php5/conf.d/apc.ini] (php::module_apc line 43) had an error: Chef::Exceptions::EnclosingDirectoryDoesNotExist: Parent directory /etc/php5/conf.d does not exist.
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/mixin/why_run.rb:241:in `run'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/mixin/why_run.rb:322:in `block in run'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/mixin/why_run.rb:321:in `each'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/mixin/why_run.rb:321:in `run'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider.rb:154:in `process_resource_requirements'
+/opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/provider.rb:132:in `run_action'
 /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/resource.rb:596:in `run_action'
 /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/runner.rb:74:in `run_action'
 /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.6.0/lib/chef/runner.rb:106:in `block (2 levels) in converge'
