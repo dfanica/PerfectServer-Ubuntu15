@@ -10,16 +10,13 @@
 		"recipe[apache2::mod_rewrite]",
 		"recipe[apache2::mod_fastcgi]",
 		"recipe[apache2::mod_fcgid]",
-		"recipe[php]",
+		"recipe[phpmyadmin]",
 		"recipe[php::module_curl]",
-		"recipe[php::module_mysql]",
-		"recipe[php::module_gd]",
 		"recipe[php::module_apc]",
 		"recipe[postfix]",
 		"recipe[pure-ftpd]",
 		"recipe[openssl]",
 		"recipe[git]",
-		"recipe[phpmyadmin]",
 		"recipe[perfectserver]",
 		"recipe[roundcube]"
     ]
