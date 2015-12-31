@@ -9,6 +9,11 @@
 
 require 'digest/sha1'
 
+# remove any previous version of phpmyadmin
+package pkg do
+    action :remove
+end
+
 home = node['phpmyadmin']['home']
 user = node['phpmyadmin']['user']
 group = node['phpmyadmin']['group']

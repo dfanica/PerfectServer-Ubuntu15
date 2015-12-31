@@ -12,6 +12,7 @@
         "recipe[apache2]",
         "recipe[php]",
         "recipe[ispconfig3::php]",
+        "recipe[ispconfig3::phpmyadmin]",
         "recipe[php5-fpm::install]",
         "recipe[ispconfig3::extra]"
     ]
