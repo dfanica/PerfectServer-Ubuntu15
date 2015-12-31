@@ -1,9 +1,9 @@
 #
-# Author:: Seth Chisamore <schisamo@opscode.com>
+# Author:: Seth Chisamore <schisamo@getchef.com>
 # Cookbook Name:: php
 # Resource:: pear_package
 #
-# Copyright:: 2011, Opscode, Inc <legal@opscode.com>
+# Copyright:: 2011-2014, Chef Software, Inc <legal@getchef.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,11 +21,18 @@
 default_action :install
 actions :install, :upgrade, :remove, :purge
 
-attribute :package_name,    :kind_of => String, :name_attribute => true
-attribute :version,         :default => nil
-attribute :channel,         :kind_of => String
-attribute :options,         :kind_of => String
-attribute :directives,      :kind_of => Hash, :default => {}
-attribute :zend_extensions, :kind_of => Array, :default => Array.new
+state_attrs :channel,
+            :directives,
+            :options,
+            :package_name,
+            :preferred_state,
+            :version,
+            :zend_extensions
+
+attribute :package_name, :kind_of => String, :name_attribute => true
+attribute :version, :default => nil
+attribute :channel, :kind_of => String
+attribute :options, :kind_of => String
+attribute :directives, :kind_of => Hash, :default => {}
+attribute :zend_extensions, :kind_of => Array, :default => []
 attribute :preferred_state, :default => 'stable'
-attribute :shell_timeout,   :kind_of => Integer, :default => 600

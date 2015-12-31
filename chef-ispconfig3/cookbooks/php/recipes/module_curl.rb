@@ -1,10 +1,10 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
+# Author::  Joshua Timberman (<joshua@getchef.com>)
+# Author::  Seth Chisamore (<schisamo@getchef.com>)
 # Cookbook Name:: php
 # Recipe:: module_curl
 #
-# Copyright 2009-2011, Opscode, Inc.
+# Copyright 2009-2014, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,15 +21,9 @@
 
 case node['platform_family']
 when 'rhel', 'fedora'
-	# cURL shipped with the core package
+  # centos php compiled with curl
 when 'debian'
   package 'php5-curl' do
-    action :install
-    notifies(:run, "execute[/usr/sbin/php5enmod curl]", :immediately) if platform?('ubuntu') && node['platform_version'].to_f >= 12.04
+    action :upgrade
   end
-end
-
-execute '/usr/sbin/php5enmod curl' do
-  action :nothing
-  only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exists?('/usr/sbin/php5enmod') }
 end

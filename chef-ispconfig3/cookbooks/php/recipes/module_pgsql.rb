@@ -1,12 +1,10 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
-# Author::  Seth Chisamore (<schisamo@opscode.com>)
-# Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
-#
+# Author::  Joshua Timberman (<joshua@getchef.com>)
+# Author::  Seth Chisamore (<schisamo@getchef.com>)
 # Cookbook Name:: php
 # Recipe:: module_pgsql
 #
-# Copyright 2009-2011, Opscode, Inc.
+# Copyright 2009-2014, Chef Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,17 +19,14 @@
 # limitations under the License.
 #
 
-pkg = value_for_platform_family(
-    [ 'rhel', 'fedora' ] => 'php-pgsql',
-    'debian' => 'php5-pgsql'
+pkg = value_for_platform(
+  %w(centos redhat scientific fedora amazon oracle) => {
+    el5_range => 'php53-pgsql',
+    'default' => 'php-pgsql'
+  },
+  'default' => 'php5-pgsql'
 )
 
 package pkg do
   action :install
-  notifies(:run, "execute[/usr/sbin/php5enmod pgsql]", :immediately) if platform?('ubuntu') && node['platform_version'].to_f >= 12.04
-end
-
-execute '/usr/sbin/php5enmod pgsql' do
-  action :nothing
-  only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exists?('/usr/sbin/php5enmod') }
 end
