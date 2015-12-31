@@ -2,9 +2,9 @@ PefectServer Chef Recipe
 ========================
 
 A complete single-machine hosting server setup using chef. It installs all components needed for a single server hosting environment.
-It fulfills all requirements to install ISPConfig3 (http://www.ispconfig.org/) directly after provisioning.
+It fulfills all requirements to install ISPConfig3 (http://www.ispconfig.org/).
 
-Tested on a ubuntu 13.04 bare image.
+Tested on a Ubuntu 15.04 bare image.
 
 Installed Components:
 ---------------------
