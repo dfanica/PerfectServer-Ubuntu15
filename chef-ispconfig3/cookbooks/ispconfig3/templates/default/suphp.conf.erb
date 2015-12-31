@@ -1,0 +1,11 @@
+<IfModule mod_suphp.c>
+    suPHP_AddHandler application/x-httpd-suphp
+
+    <Directory />
+        suPHP_Engine on
+    </Directory>
+
+    <Directory /usr/share>
+        suPHP_Engine off
+    </Directory>
+</IfModule>

@@ -24,3 +24,9 @@ execute 'php: enable mcrypt module' do
     command 'php5enmod mcrypt'
     ignore_failure true
 end
+
+# Remove `<FilesMatch "\.ph(p3?|tml)$">` section from suphp.conf
+template '/etc/apache2/mods-available/suphp.conf' do
+    source 'suphp.conf.erb'
+    notifies :restart, 'service[apache2]'
+end
