@@ -10,7 +10,7 @@
 require 'digest/sha1'
 
 # remove any previous version of phpmyadmin
-package pkg do
+package 'phpmyadmin' do
     action :remove
 end
 
