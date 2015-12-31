@@ -38,7 +38,6 @@ end
 
 # The ISPConfig 3 setup uses amavisd which loads the SpamAssassin filter library internally...
 # so we can stop SpamAssassin to free up some RAM
-package 'spamassassin' do action :remove end
 service 'spamassassin' do action [ :stop, :disable ] end
 
 # Edit the clamd configuration file
