@@ -36,6 +36,7 @@
     php5-xmlrpc
     php5-xsl
     memcached
+    phpmyadmin
 }.each do |pkg|
   package pkg do
     action :install
