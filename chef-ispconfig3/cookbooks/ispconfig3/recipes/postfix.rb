@@ -30,13 +30,13 @@ end
 
 # Open the TLS/SSL and submission ports in Postfix
 template ::File.join(node['ispconfig3']['postfix_path'], 'master.cf') do
-    source 'postfix/master.cf.erb'
+    source 'postfix_master.cf.erb'
     notifies :restart, 'service[postfix]'
 end
 
 # Open the TLS/SSL and submission ports in Postfix
 template ::File.join(node['ispconfig3']['mariadb_mysql_path'], 'mysqld.cnf') do
-    source 'postfix/mysqld.cnf.erb'
+    source 'postfix_mysqld.cnf.erb'
 end
 
 #--------------------------------------------------
