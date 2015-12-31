@@ -58,34 +58,34 @@ directory node['phpmyadmin']['save_dir'] do
 end
 
 # Download the selected PHPMyAdmin archive
-# phpmyadmin_file = ::File.join(Chef::Config[:file_cache_path], ::File.basename(package_url))
-# remote_file phpmyadmin_file do
-#     owner user
-#     group group
-#     mode 00644
-#     action :create_if_missing
-#     source package_url
-#     checksum node['phpmyadmin']['checksum']
-# end
-
-# bash 'extract-php-myadmin' do
-#     user user
-#     group group
-#     cwd home
-#     code <<-EOH
-#         rm -fr *
-#         tar xzf #{phpmyadmin_file}
-#         mv phpMyAdmin-#{node['phpmyadmin']['version']}-all-languages/* #{home}/
-#         rm -fr phpMyAdmin-#{node['phpmyadmin']['version']}-all-languages
-#     EOH
-#     not_if { ::File.exists?("#{home}/RELEASE-DATE-#{node['phpmyadmin']['version']}")}
-# end
-
-tar_extract package_url do
-  target_dir "#{home}/phpMyAdmin-#{node['phpmyadmin']['version']}-all-languages"
-  creates "#{home}/phpMyAdmin-#{node['phpmyadmin']['version']}-all-languages"
-  not_if { ::File.exists?("#{home}/RELEASE-DATE-#{node['phpmyadmin']['version']}")}
+phpmyadmin_file = ::File.join(Chef::Config[:file_cache_path], ::File.basename(package_url))
+remote_file phpmyadmin_file do
+    owner user
+    group group
+    mode 00644
+    action :create_if_missing
+    source package_url
+    checksum node['phpmyadmin']['checksum']
 end
+
+bash 'extract-php-myadmin' do
+    user user
+    group group
+    cwd home
+    code <<-EOH
+        rm -fr *
+        tar xzf #{phpmyadmin_file}
+        mv phpMyAdmin-#{node['phpmyadmin']['version']}-all-languages/* #{home}/
+        rm -fr phpMyAdmin-#{node['phpmyadmin']['version']}-all-languages
+    EOH
+    not_if { ::File.exists?("#{home}/RELEASE-DATE-#{node['phpmyadmin']['version']}")}
+end
+
+# tar_extract package_url do
+#   target_dir "#{home}/phpMyAdmin-#{node['phpmyadmin']['version']}-all-languages"
+#   creates "#{home}/phpMyAdmin-#{node['phpmyadmin']['version']}-all-languages"
+#   not_if { ::File.exists?("#{home}/RELEASE-DATE-#{node['phpmyadmin']['version']}")}
+# end
 
 directory "#{home}/conf.d" do
     owner user
