@@ -27,7 +27,7 @@ default['php']['ini_settings'] = {
 }
 
 # phpmyadmin
-default['phpmyadmin'] => {
+default['phpmyadmin'] = {
     'version' => '4.2.12',
     'checksum' => 'e4a5fa55c26d0447e5acb216cf14cbde665a69c64db94d2727ba8041788d309f',
     'mirror' => 'https://files.phpmyadmin.net/phpMyAdmin',
