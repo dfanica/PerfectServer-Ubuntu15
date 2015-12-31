@@ -42,7 +42,7 @@ default['phpmyadmin'] = {
     'upload_dir' => '/var/lib/php5/uploads',
     'save_dir' => '/var/lib/php5/uploads',
 
-    'maxrows' => 100
+    'maxrows' => 100,
     'protect_binary' => 'blob',
     'default_lang' => 'en',
     'default_display' => 'horizontal',
