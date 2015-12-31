@@ -39,19 +39,26 @@ template ::File.join(node['ispconfig3']['mariadb_mysql_path'], 'mysqld.cnf') do
     source 'postfix/mysqld.cnf.erb'
 end
 
-package 'mysql_secure_installation' do
-    description 'Secure MySQL installation'
-    requires :mysql_core
-    apt 'expect'
-    local_file = 'mysql_secure_installation_no_ask'
-    remote_file = '/usr/local/mysql/scripts/mysql_secure_installation_no_ask'
-    transfer local_file, remote_file do
-        pre :install, 'mkdir -p /usr/local/mysql/scripts'
-        post :install, "chmod +x #{remote_file}"
-        post :install, remote_file
-    end
-    verify do
-        has_file remote_file
-    end
-    notifies :restart, 'service[mysql]'
+#--------------------------------------------------
+# mysql_secure_installation 5.5
+#--------------------------------------------------
+# 4. Set root password? [Y/n] Y
+# 1. Remove anonymous users? [Y/n] Y
+# 3. Disallow root login remotely? [Y/n] Y
+# 2. Remove test database and access to it? [Y/n] Y
+# 5. Reload privilege tables now? [Y/n] Y
+
+root_password = node['mysql_user']['root']['password']
+bash "mysql_secure_installation" do
+  code <<-EOC
+    mysql -u root -e "DELETE FROM mysql.user WHERE User='';"
+    mysql -u root -e "DROP DATABASE test;"
+    mysql -u root -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';"
+    mysql -u root -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
+    mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('#{root_password}');" -D mysql
+    mysql -u root -p#{root_password} -e "SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('#{root_password}');" -D mysql
+    mysql -u root -p#{root_password} -e "SET PASSWORD FOR 'root'@'::1' = PASSWORD('#{root_password}');" -D mysql
+    mysql -u root -p#{root_password} -e "FLUSH PRIVILEGES;"
+  EOC
+  only_if "mysql -u root -e 'show databases'"
 end

@@ -2,3 +2,6 @@
 default['ispconfig3']['sources_list_path']      = '/etc/apt'
 default['ispconfig3']['postfix_path']           = '/etc/postfix'
 default['ispconfig3']['mariadb_mysql_path']     = '/etc/mysql/mariadb.conf.d'
+
+# mysql
+default['mysql_user']['root']['password']       = 't896547h69'
