@@ -2,11 +2,6 @@
 
 This file is used to list changes made in each version of phpmyadmin.
 
-## 1.0.6
-
-* Blowfish secret fix
-* PMA version bump
-
 ## 1.0.5
 
 * PMA major version bump in the 4.x series
