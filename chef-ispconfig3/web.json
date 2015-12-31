@@ -1,6 +1,7 @@
 {
     "run_list": [
         "recipe[apt]",
+        "recipe[tar]",
         "recipe[ispconfig3]",
         "recipe[apparmor]",
         "recipe[ntp]",

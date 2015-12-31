@@ -1,5 +1,27 @@
 # ispcongif3
 
+# phpmyadmin
+default['phpmyadmin']['version'] = '4.2.12'
+default['phpmyadmin']['checksum'] = '7c00d28af02c45d68bacac53fc23ebcfd180b4959f9933422f35015c2091030b'
+default['phpmyadmin']['mirror'] = 'https://files.phpmyadmin.net/phpMyAdmin'
+
+default['phpmyadmin']['home'] = '/opt/phpmyadmin'
+default['phpmyadmin']['user'] = 'phpmyadmin'
+default['phpmyadmin']['group'] = 'phpmyadmin'
+default['phpmyadmin']['socket'] = '/tmp/phpmyadmin.sock'
+
+default['phpmyadmin']['blowfish_secret'] = '7654588cf9f0f92f01a6aa361d02c0cf038'
+
+default['phpmyadmin']['upload_dir'] = '/var/lib/php5/uploads'
+default['phpmyadmin']['save_dir'] = '/var/lib/php5/uploads'
+
+default['phpmyadmin']['maxrows'] = 100
+default['phpmyadmin']['protect_binary'] = 'blob'
+default['phpmyadmin']['default_lang'] = 'en'
+default['phpmyadmin']['default_display'] = 'horizontal'
+default['phpmyadmin']['query_history'] = true
+default['phpmyadmin']['query_history_size'] = 100
+
 # mysql
 default['mysql_user']['root']['password'] = 't896547h69'
 
