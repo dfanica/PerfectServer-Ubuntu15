@@ -61,4 +61,5 @@ bash "mysql_secure_installation" do
     mysql -u root -p#{root_password} -e "FLUSH PRIVILEGES;"
   EOC
   only_if "mysql -u root -e 'show databases'"
+  notifies :restart, 'service[mysql]'
 end
