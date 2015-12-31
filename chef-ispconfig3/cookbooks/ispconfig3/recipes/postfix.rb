@@ -39,7 +39,7 @@ template ::File.join(node['ispconfig3']['mariadb_mysql_path'], 'mysqld.cnf') do
     source 'postfix/mysqld.cnf.erb'
 end
 
-package :mysql_secure_installation do
+package 'mysql_secure_installation' do
     description 'Secure MySQL installation'
     requires :mysql_core
     apt 'expect'
