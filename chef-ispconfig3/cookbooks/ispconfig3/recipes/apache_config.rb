@@ -43,3 +43,4 @@ ruby_block "to enable ruby files on webserver" do
         rc.write_file
     end
 end
+service "apache2" do action :restart end
