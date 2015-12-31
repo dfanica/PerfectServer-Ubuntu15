@@ -1,10 +1,10 @@
 #
-# Author::  Joshua Timberman (<joshua@getchef.com>)
-# Author::  Seth Chisamore (<schisamo@getchef.com>)
+# Author::  Joshua Timberman (<joshua@opscode.com>)
+# Author::  Seth Chisamore (<schisamo@opscode.com>)
 # Cookbook Name:: php
 # Recipe:: module_memcache
 #
-# Copyright 2009-2014, Chef Software, Inc.
+# Copyright 2009-2011, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,17 +21,22 @@
 
 case node['platform_family']
 when 'rhel', 'fedora'
-  %w(zlib-devel).each do |pkg|
-    package pkg do
-      action :install
-    end
+
+  package 'zlib-devel' do
+    action :install
   end
   php_pear 'memcache' do
     action :install
-    # directives(:shm_size => "128M", :enable_cli => 0)
   end
+
 when 'debian'
   package 'php5-memcache' do
     action :install
+    notifies(:run, "execute[/usr/sbin/php5enmod memcache]", :immediately) if platform?('ubuntu') && node['platform_version'].to_f >= 12.04
   end
+end
+
+execute '/usr/sbin/php5enmod memcache' do
+  action :nothing
+  only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exists?('/usr/sbin/php5enmod') }
 end

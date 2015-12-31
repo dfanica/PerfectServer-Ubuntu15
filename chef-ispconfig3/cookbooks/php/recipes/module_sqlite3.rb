@@ -1,10 +1,10 @@
 #
-# Author::  Joshua Timberman (<joshua@getchef.com>)
-# Author::  Seth Chisamore (<schisamo@getchef.com>)
-# Cookbook Name:: php
-# Recipe:: module_sqlite3
+# Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
 #
-# Copyright 2009-2014, Chef Software, Inc.
+# Cookbook Name:: php
+# Recipe:: module_sqlite
+#
+# Copyright 2009-2012, Panagiotis Papadomitsos
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,11 +19,17 @@
 # limitations under the License.
 #
 
-case node['platform_family']
-when 'rhel', 'fedora'
-  # already there in centos, --with-pdo-sqlite=shared
-when 'debian'
-  package 'php5-sqlite' do
-    action :install
-  end
+pkg = value_for_platform_family(
+    [ 'rhel', 'fedora' ] => 'php-sqlite',
+    'debian' => 'php5-sqlite'
+)
+
+package pkg do
+  action :install
+  notifies(:run, "execute[/usr/sbin/php5enmod sqlite]", :immediately) if platform?('ubuntu') && node['platform_version'].to_f >= 12.04
+end
+
+execute '/usr/sbin/php5enmod sqlite' do
+  action :nothing
+  only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exists?('/usr/sbin/php5enmod') }
 end

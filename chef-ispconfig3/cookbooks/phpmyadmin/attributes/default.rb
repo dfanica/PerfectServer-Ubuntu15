@@ -17,8 +17,8 @@
 # limitations under the License.
 #
 
-default['phpmyadmin']['version'] = '4.0.3'
-default['phpmyadmin']['checksum'] = 'a06c6b7cde524bc4ff4f458e769b6ef3c07918d9951131d6ece3f843d8aadda3'
+default['phpmyadmin']['version'] = '4.0.8'
+default['phpmyadmin']['checksum'] = '7c00d28af02c45d68bacac53fc23ebcfd180b4959f9933422f35015c2091030b'
 default['phpmyadmin']['mirror'] = 'http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin'
 
 default['phpmyadmin']['fpm'] = true
@@ -28,14 +28,18 @@ default['phpmyadmin']['user'] = 'phpmyadmin'
 default['phpmyadmin']['group'] = 'phpmyadmin'
 default['phpmyadmin']['socket'] = '/tmp/phpmyadmin.sock'
 
-case node['platform']
-when 'ubuntu', 'debian'
-	default['phpmyadmin']['upload_dir'] = '/var/lib/php5/uploads'
-	default['phpmyadmin']['save_dir'] = '/var/lib/php5/uploads'
-when 'centos', 'redhat'
-	default['phpmyadmin']['upload_dir'] = '/var/lib/php/uploads'
-	default['phpmyadmin']['save_dir'] = '/var/lib/php/uploads'
-end	
+if Chef::Config[:solo]
+  default['phpmyadmin']['blowfish_secret'] = '7654588cf9f0f92f01a6aa361d02c0cf038'
+end
+
+case node['platform_family']
+when 'debian'
+  default['phpmyadmin']['upload_dir'] = '/var/lib/php5/uploads'
+  default['phpmyadmin']['save_dir'] = '/var/lib/php5/uploads'
+when 'rhel'
+  default['phpmyadmin']['upload_dir'] = '/var/lib/php/uploads'
+  default['phpmyadmin']['save_dir'] = '/var/lib/php/uploads'
+end 
 default['phpmyadmin']['maxrows'] = 100
 default['phpmyadmin']['protect_binary'] = 'blob'
 default['phpmyadmin']['default_lang'] = 'en'

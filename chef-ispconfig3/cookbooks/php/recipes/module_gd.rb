@@ -1,10 +1,10 @@
 #
-# Author::  Joshua Timberman (<joshua@getchef.com>)
-# Author::  Seth Chisamore (<schisamo@getchef.com>)
+# Author::  Panagiotis Papadomitsos (<pj@ezgr.net>)
+#
 # Cookbook Name:: php
 # Recipe:: module_gd
 #
-# Copyright 2009-2014, Chef Software, Inc.
+# Copyright 2009-2012, Panagiotis Papadomitsos
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,17 +19,17 @@
 # limitations under the License.
 #
 
-pkg = value_for_platform(
-  %w(centos redhat scientific fedora amazon oracle) => {
-    el5_range => 'php53-gd',
-    'default' => 'php-gd'
-  },
-  'freebsd' => {
-    'default' => 'php56-gd'
-  },
-  'default' => 'php5-gd'
+pkg = value_for_platform_family(
+    [ 'rhel', 'fedora' ] => 'php-gd',
+    'debian' => 'php5-gd'
 )
 
 package pkg do
   action :install
+  notifies(:run, "execute[/usr/sbin/php5enmod gd]", :immediately) if platform?('ubuntu') && node['platform_version'].to_f >= 12.04
+end
+
+execute '/usr/sbin/php5enmod gd' do
+  action :nothing
+  only_if { platform?('ubuntu') && node['platform_version'].to_f >= 12.04 && ::File.exists?('/usr/sbin/php5enmod') }
 end
