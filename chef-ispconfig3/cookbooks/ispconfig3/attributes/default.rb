@@ -2,7 +2,7 @@
 
 # phpmyadmin
 default['phpmyadmin']['version'] = '4.2.12'
-default['phpmyadmin']['checksum'] = 'e4a5fa55c26d'
+default['phpmyadmin']['checksum'] = 'e4a5fa55c26d0447e5acb216cf14cbde665a69c64db94d2727ba8041788d309f'
 default['phpmyadmin']['mirror'] = 'https://files.phpmyadmin.net/phpMyAdmin'
 
 default['phpmyadmin']['home'] = '/opt/phpmyadmin'
