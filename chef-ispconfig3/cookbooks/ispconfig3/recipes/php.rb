@@ -9,6 +9,7 @@
 
 # Install packages
 %w{
+    libapache2-mod-php5
     php5-gd
     php5-mcrypt
     php5-mysql
