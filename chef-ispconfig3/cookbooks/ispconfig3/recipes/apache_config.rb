@@ -25,11 +25,6 @@ execute 'php: enable mcrypt module' do
     ignore_failure true
 end
 
-# Remove `<FilesMatch "\.ph(p3?|tml)$">` section from suphp.conf
-template '/etc/apache2/mods-available/suphp.conf' do
-    source 'suphp.conf.erb'
-end
-
 # to host Ruby files with the extension .rb on the web sites created through ISPConfig,
 # we must comment out the line `application/x-ruby rb` in /etc/mime.types
 ruby_block "to enable ruby files on webserver" do
@@ -42,4 +37,9 @@ ruby_block "to enable ruby files on webserver" do
         rc.write_file
     end
 end
-service "apache2" do action :restart end
+
+# Remove `<FilesMatch "\.ph(p3?|tml)$">` section from suphp.conf
+template '/etc/apache2/mods-available/suphp.conf' do
+    source 'suphp.conf.erb'
+    notifies :restart, 'service[apache2]'
+end
