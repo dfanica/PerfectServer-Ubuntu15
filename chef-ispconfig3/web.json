@@ -7,6 +7,8 @@
         "recipe[sendmail::remove]",
         "recipe[postfix]",
         "recipe[ispconfig3::postfix]",
-        "recipe[ispconfig3::clamav]"
+        "recipe[ispconfig3::clamav]",
+        "recipe[apache2]",
+        "recipe[php]"
     ]
 }

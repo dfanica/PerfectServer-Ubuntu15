@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: ispconfig3
-# Recipe:: default
+# Recipe:: clamav
 #
 # Copyright 2015, Daniel Fanica
 #

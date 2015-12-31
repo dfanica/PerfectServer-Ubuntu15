@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: ispconfig3
-# Recipe:: default
+# Recipe:: postfix
 #
 # Copyright 2015, Daniel Fanica
 #
