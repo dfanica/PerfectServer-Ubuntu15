@@ -9,6 +9,8 @@
         "recipe[ispconfig3::postfix]",
         "recipe[ispconfig3::clamav]",
         "recipe[apache2]",
-        "recipe[php]"
+        "recipe[php]",
+        "recipe[phpmyadmin]",
+        "recipe[ispconfig3::extra]",
     ]
 }
