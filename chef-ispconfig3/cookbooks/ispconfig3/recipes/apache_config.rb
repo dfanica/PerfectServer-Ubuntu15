@@ -33,12 +33,12 @@ end
 
 # to host Ruby files with the extension .rb on the web sites created through ISPConfig,
 # we must comment out the line `application/x-ruby rb` in /etc/mime.types
-ruby_block "enable ruby files on webserver" do
+ruby_block "to enable ruby files on webserver" do
     block do
         rc = Chef::Util::FileEdit.new("/etc/mime.types")
         rc.search_file_replace_line(
-            /^application\/x-ruby /,
-            "# application/x-ruby rb"
+            /^application\/x-ruby/,
+            "## application/x-ruby rb"
         )
         rc.write_file
     end
