@@ -29,13 +29,13 @@
 end
 
 # Open the TLS/SSL and submission ports in Postfix
-template ::File.join(node['ispconfig3']['postfix_path'], 'master.cf') do
+template '/etc/postfix/master.cf' do
     source 'master.cf.erb'
     notifies :restart, 'service[postfix]'
 end
 
 # Open the TLS/SSL and submission ports in Postfix
-template ::File.join(node['ispconfig3']['mariadb_mysql_path'], 'mysqld.cnf') do
+template '/etc/mysql/mariadb.conf.d/mysqld.cnf' do
     source 'mysqld.cnf.erb'
 end
 
@@ -63,3 +63,59 @@ bash "mysql_secure_installation" do
   only_if "mysql -u root -e 'show databases'"
 end
 service "mysql" do action :restart end
+
+
+#--------------------------------------------------
+# Install Amavisd-new, SpamAssassin, And Clamav
+#--------------------------------------------------
+
+# Install packages
+%w{
+    amavisd-new
+    spamassassin
+    clamav
+    clamav-daemon
+    zoo
+    unzip
+    bzip2
+    arj
+    nomarch
+    lzop
+    cabextract
+    apt-listchanges
+    libnet-ldap-perl
+    libauthen-sasl-perl
+    clamav-docs
+    daemon
+    libio-string-perl
+    libio-socket-ssl-perl
+    libnet-ident-perl
+    zip
+    libnet-dns-perl
+}.each do |pkg|
+  package pkg do
+    action :install
+  end
+end
+
+# The ISPConfig 3 setup uses amavisd which loads the SpamAssassin filter library internally...
+# so we can stop SpamAssassin to free up some RAM
+package 'spamassassin' do action :remove end
+service 'spamassassin' do action [ :stop, :disable ] end
+
+# Edit the clamd configuration file
+# Set AllowSupplementaryGroups to TRUE
+ruby_block "edit etc hosts" do
+  block do
+    rc = Chef::Util::FileEdit.new("/etc/clamav/clamd.conf")
+    rc.search_file_replace_line(
+      /^AllowSupplementaryGroups/,
+      "AllowSupplementaryGroups true"
+    )
+    rc.write_file
+  end
+end
+
+# start clamav
+execute 'freshclam'
+service 'clamav-daemon' do action :start end
