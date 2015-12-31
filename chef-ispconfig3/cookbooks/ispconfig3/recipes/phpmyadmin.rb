@@ -83,6 +83,7 @@ end
 
 tar_extract package_url do
   target_dir "#{home}/phpMyAdmin-#{node['phpmyadmin']['version']}-all-languages"
+  creates "#{home}/phpMyAdmin-#{node['phpmyadmin']['version']}-all-languages"
   not_if { ::File.exists?("#{home}/RELEASE-DATE-#{node['phpmyadmin']['version']}")}
 end
 
