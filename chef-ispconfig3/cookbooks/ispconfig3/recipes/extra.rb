@@ -10,7 +10,6 @@
 # Install packages
 %w{
     apache2-doc
-    memcached
 }.each do |pkg|
   package pkg do
     action :install
