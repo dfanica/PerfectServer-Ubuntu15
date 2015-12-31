@@ -28,7 +28,6 @@ end
 # Remove `<FilesMatch "\.ph(p3?|tml)$">` section from suphp.conf
 template '/etc/apache2/mods-available/suphp.conf' do
     source 'suphp.conf.erb'
-    notifies :restart, 'service[apache2]'
 end
 
 # to host Ruby files with the extension .rb on the web sites created through ISPConfig,
