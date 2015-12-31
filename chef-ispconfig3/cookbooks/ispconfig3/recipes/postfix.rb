@@ -34,6 +34,11 @@ template ::File.join(node['ispconfig3']['postfix_path'], 'master.cf') do
     notifies :restart, 'service[postfix]'
 end
 
+# Open the TLS/SSL and submission ports in Postfix
+template ::File.join(node['ispconfig3']['mariadb_mysql_path'], 'mysqld.cnf') do
+    source 'mysqld.cnf.erb'
+end
+
 #--------------------------------------------------
 # mysql_secure_installation 5.5
 #--------------------------------------------------
@@ -57,9 +62,4 @@ bash "mysql_secure_installation" do
   EOC
   only_if "mysql -u root -e 'show databases'"
 end
-
-# Open the TLS/SSL and submission ports in Postfix
-template ::File.join(node['ispconfig3']['mariadb_mysql_path'], 'mysqld.cnf') do
-    source 'mysqld.cnf.erb'
-    notifies :restart, 'service[mysql]'
-end
+service "mysql" do action :restart end
