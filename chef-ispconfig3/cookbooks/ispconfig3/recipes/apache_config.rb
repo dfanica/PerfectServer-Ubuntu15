@@ -37,7 +37,7 @@ ruby_block "enable ruby files on webserver" do
   block do
     rc = Chef::Util::FileEdit.new("/etc/mime.types")
     rc.search_file_replace_line(
-      /^application/x-ruby /,
+      /^application\/x-ruby /,
       "# application/x-ruby rb"
     )
     rc.write_file
