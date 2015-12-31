@@ -6,6 +6,7 @@
         "recipe[ntp]",
         "recipe[sendmail::remove]",
         "recipe[postfix]",
-        "recipe[ispconfig3::postfix]"
+        "recipe[ispconfig3::postfix]",
+        "recipe[ispconfig3::clamav]"
     ]
 }
