@@ -22,6 +22,5 @@ template '/etc/aliases' do
 end
 
 execute 'newaliases' do
-    subscribes :run, template["/etc/mailman/aliases/#{node['mailman']['list_name']}"]
     notifies :restart, 'service[postfix]'
 end
