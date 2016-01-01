@@ -57,3 +57,6 @@ service "pure-ftpd-mysql" do action :start end
 template '/etc/fstab' do
     source 'fstab.erb'
 end
+
+# enable quota
+mount '/' do action :remount end
