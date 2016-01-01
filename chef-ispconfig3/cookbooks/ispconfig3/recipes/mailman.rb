@@ -7,4 +7,7 @@
 # All rights reserved
 #
 
-include_recipe 'mailman'
+package 'mailman' do
+    action :install
+end
+# /etc/mailman/apache.conf

@@ -14,8 +14,7 @@
         "recipe[ispconfig3::phpmyadmin]",
         "recipe[ispconfig3::apache_config]",
         "recipe[php5-fpm::install]",
-        "recipe[openssl]",
-        "recipe[mailman]",
+        "recipe[ispconfig3::mailman]",
         "recipe[ispconfig3::extra]"
     ]
 }
