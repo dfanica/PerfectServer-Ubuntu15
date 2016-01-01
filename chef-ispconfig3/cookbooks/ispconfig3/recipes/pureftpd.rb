@@ -41,8 +41,6 @@ directory '/etc/ssl/private/' do
     action :create
 end
 
-include_recipe 'openssl'
-
 # openssl req -x509 -nodes -days 7300 -newkey rsa:2048 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem
 openssl_rsa_key '/etc/ssl/private/pure-ftpd.pem' do
     key_length 2048
