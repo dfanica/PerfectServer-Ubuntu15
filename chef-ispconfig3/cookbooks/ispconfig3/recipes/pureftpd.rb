@@ -50,8 +50,8 @@ end
 
 file pureftpd_pem_cert do
     mode '0600'
-    notifies :restart, 'service[pure-ftpd-mysql]'
 end
+service "pure-ftpd-mysql" do action :start end
 
 # Add `usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0` to the partition with the mount point /
 template '/etc/fstab' do
