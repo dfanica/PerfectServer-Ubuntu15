@@ -24,4 +24,4 @@ link '/bin/sh' do
 end
 
 # Disable AppArmor
-include_recipe 'apparmor
+include_recipe 'apparmor'
