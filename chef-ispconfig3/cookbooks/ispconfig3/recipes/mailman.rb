@@ -16,6 +16,10 @@ service 'mailman' do
     action [:enable, :start]
 end
 
+def list_name_exists?
+    shell_out('list_lists').stdout.downcase.include?(node['mailman']['list_name'])
+end
+
 # Before we can start Mailman, a first mailing list called mailman must be created
 unless list_name_exists?
     execute "newlist #{node['mailman']['list_name']}" do
@@ -37,8 +41,4 @@ link '/etc/apache2/conf-available/mailman.conf' do
     link_type :symbolic
     notifies :restart, 'service[apache2]'
     notifies :restart, 'service[mailman]'
-end
-
-def list_name_exists?
-    shell_out('list_lists').stdout.downcase.include?(node['mailman']['list_name'])
 end
