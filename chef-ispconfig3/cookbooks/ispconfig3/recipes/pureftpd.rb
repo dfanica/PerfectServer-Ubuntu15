@@ -42,6 +42,10 @@ directory '/etc/ssl/private/' do
 end
 
 # openssl req -x509 -nodes -days 7300 -newkey rsa:2048 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem
-openssl_rsa_key '/etc/ssl/private/pure-ftpd.pem' do
-    key_length 2048
+# openssl_rsa_key '/etc/ssl/private/pure-ftpd.pem' do
+#     key_length 2048
+# end
+openssl_dhparam '/etc/ssl/private/pure-ftpd.pem' do
+  key_length 2048
+  generator 2
 end
