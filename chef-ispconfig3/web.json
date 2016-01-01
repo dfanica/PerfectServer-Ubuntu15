@@ -15,6 +15,7 @@
         "recipe[ispconfig3::apache_config]",
         "recipe[php5-fpm::install]",
         "recipe[ispconfig3::mailman]",
+        "recipe[ispconfig3::pureftpd]",
         "recipe[ispconfig3::extra]"
     ]
 }

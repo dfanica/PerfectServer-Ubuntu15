@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: ispconfig3
-# Recipe:: default
+# Recipe:: mailman
 #
 # Copyright 2015, Daniel Fanica
 #
