@@ -59,7 +59,8 @@ template '/etc/fstab' do
 end
 
 # enable quota
-mount '/' do
-    device '/'
-    action :remount
-end
+execute 'mount -o remount /'
+# mount '/' do
+#     device '/'
+#     action :remount
+# end
