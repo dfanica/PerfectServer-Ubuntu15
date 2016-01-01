@@ -16,16 +16,10 @@ service 'mailman' do
     action [:enable, :start]
 end
 
-def list_name_exists?
-    cmd = shell_out("list_lists")
-    cmd.stdout.downcase.include?(node['mailman']['list_name'])
-end
-
 # Before we can start Mailman, a first mailing list called mailman must be created
-unless list_name_exists?
-    execute "newlist #{node['mailman']['list_name']}" do
-        command "newlist -l en -q mailman #{node['mailman']['email']} #{node['mailman']['password']}"
-    end
+execute "newlist #{node['mailman']['list_name']}" do
+    command "newlist -l en -q mailman #{node['mailman']['email']} #{node['mailman']['password']}"
+    not_if shell_out('list_lists').stdout.downcase.include?(node['mailman']['list_name'])
 end
 
 template '/etc/aliases' do
