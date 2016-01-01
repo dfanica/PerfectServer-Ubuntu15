@@ -17,7 +17,8 @@ service 'mailman' do
 end
 
 def list_name_exists?
-    shell_out('list_lists').stdout.downcase.include?(node['mailman']['list_name'])
+    cmd = shell_out("list_lists")
+    cmd.stdout.downcase.include?(node['mailman']['list_name'])
 end
 
 # Before we can start Mailman, a first mailing list called mailman must be created
