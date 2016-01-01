@@ -60,7 +60,3 @@ end
 
 # enable quota
 execute 'mount -o remount /'
-# mount '/' do
-#     device '/'
-#     action :remount
-# end
