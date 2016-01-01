@@ -22,6 +22,3 @@ link '/bin/sh' do
   to 'bash'
   link_type :symbolic
 end
-
-# Disable AppArmor
-include_recipe 'apparmor'
