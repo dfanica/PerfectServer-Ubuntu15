@@ -11,6 +11,11 @@ package 'mailman' do
     action :install
 end
 
+# Start the Mailman daemon
+service 'mailman' do
+    action [:enable, :start]
+end
+
 # Before we can start Mailman, a first mailing list called mailman must be created
 unless shell_out('list_lists').stdout.downcase.include?(node['mailman']['list_name'])
     execute "newlist #{node['mailman']['list_name']}" do
@@ -31,9 +36,5 @@ link '/etc/apache2/conf-available/mailman.conf' do
     to '/etc/mailman/apache.conf'
     link_type :symbolic
     notifies :restart, 'service[apache2]'
-end
-
-# Start the Mailman daemon
-service 'mailman' do
-    action [:enable, :start]
+    notifies :restart, 'service[mailman]'
 end
