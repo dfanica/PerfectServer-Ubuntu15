@@ -4,7 +4,6 @@
         "recipe[tar]",
         "recipe[ispconfig3]",
         "recipe[ntp]",
-        "recipe[apparmor]",
         "recipe[sendmail::remove]",
         "recipe[postfix]",
         "recipe[ispconfig3::postfix]",
@@ -15,6 +14,7 @@
         "recipe[ispconfig3::phpmyadmin]",
         "recipe[ispconfig3::apache_config]",
         "recipe[php5-fpm::install]",
+        "recipe[apparmor]",
         "recipe[ispconfig3::extra]"
     ]
 }

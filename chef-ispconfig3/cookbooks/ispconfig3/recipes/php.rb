@@ -10,9 +10,7 @@
 # Install packages
 %w{
     libapache2-mod-php5
-    php5-gd
     php5-mcrypt
-    php5-mysql
     php5-imap
     libapache2-mod-fcgid
     apache2-suexec
@@ -23,7 +21,6 @@
     libapache2-mod-suphp
     libruby
     libapache2-mod-python
-    php5-curl
     php5-intl
     php5-memcache
     php5-memcached
@@ -31,7 +28,6 @@
     php5-ps
     php5-pspell
     php5-recode
-    php5-sqlite
     php5-tidy
     php5-xmlrpc
     php5-xsl
