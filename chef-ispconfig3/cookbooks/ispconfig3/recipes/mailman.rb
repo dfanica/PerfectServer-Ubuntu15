@@ -18,5 +18,5 @@ unless shell_out('list_lists').stdout.downcase.include?(node['mailman']['list_na
 end
 
 template '/etc/aliases' do
-    source 'mailman_aliases.erb'
+    source 'aliases.erb'
 end
