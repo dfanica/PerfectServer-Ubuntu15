@@ -18,6 +18,7 @@
         "recipe[openssl]",
         "recipe[ispconfig3::pureftpd]",
         "recipe[ispconfig3::bind]",
+        "recipe[fail2ban]",
         "recipe[ispconfig3::extra]"
     ]
 }
