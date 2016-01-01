@@ -35,6 +35,7 @@
     php5-tidy
     php5-xmlrpc
     php5-xsl
+    php5-apcu
     memcached
 }.each do |pkg|
   package pkg do

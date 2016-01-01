@@ -23,5 +23,8 @@ link '/bin/sh' do
   link_type :symbolic
 end
 
+# Synchronize the System Clock
+include_recipe 'ntp'
+
 # Disable AppArmor
 include_recipe 'apparmor'
