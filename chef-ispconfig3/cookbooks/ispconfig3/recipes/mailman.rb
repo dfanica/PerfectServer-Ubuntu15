@@ -10,4 +10,11 @@
 package 'mailman' do
     action :install
 end
-# /etc/mailman/apache.conf
+
+execute "newlist mailman" do
+    command "newlist -q mailman #{node['mailman']['email']} #{node['mailman']['password']}"
+end
+
+template '/etc/aliases' do
+    source 'mailman_aliases.erb'
+end

@@ -52,3 +52,7 @@ default['phpmyadmin'] = {
     'query_history' => true,
     'query_history_size' => 100
 }
+
+# mailman
+default["mailman"]["email"] = "mailman@danielfanica.com"
+default["mailman"]["password"] = nil
