@@ -7,6 +7,7 @@
 # All rights reserved
 #
 
+
 package 'mailman' do
     action :install
 end
@@ -16,10 +17,17 @@ service 'mailman' do
     action [:enable, :start]
 end
 
+def list_name_exists?
+  mailman_lists = `list_lists`
+  Chef::Log.info("Mailman existing lists: #{mailman_lists.chomp}")
+  $?.success?
+end
+
 # Before we can start Mailman, a first mailing list called mailman must be created
-execute "newlist #{node['mailman']['list_name']}" do
-    command "newlist -l en -q mailman #{node['mailman']['email']} #{node['mailman']['password']}"
-    not_if shell_out('list_lists').stdout.downcase.include?(node['mailman']['list_name'])
+unless list_name_exists?
+    execute "newlist #{node['mailman']['list_name']}" do
+        command "newlist -l en -q mailman #{node['mailman']['email']} #{node['mailman']['password']}"
+    end
 end
 
 template '/etc/aliases' do
