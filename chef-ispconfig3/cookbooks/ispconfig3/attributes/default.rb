@@ -1,5 +1,8 @@
 # ispcongif3
 
+# apparmor
+default['apparmor']['disable'] = true
+
 # mysql
 default['mysql_user']['root']['password'] = 't896547h69'
 
