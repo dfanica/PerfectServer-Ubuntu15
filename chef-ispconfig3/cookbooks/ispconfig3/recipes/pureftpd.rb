@@ -42,10 +42,18 @@ directory '/etc/ssl/private/' do
 end
 
 # openssl req -x509 -nodes -days 7300 -newkey rsa:2048 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem
-# openssl_rsa_key '/etc/ssl/private/pure-ftpd.pem' do
-#     key_length 2048
-# end
-openssl_dhparam '/etc/ssl/private/pure-ftpd.pem' do
-  key_length 2048
-  generator 2
+pureftpd_pem_cert = '/etc/ssl/private/pure-ftpd.pem'
+
+openssl_rsa_key pureftpd_pem_cert do
+    key_length 2048
+end
+
+file pureftpd_pem_cert do
+    mode '0600'
+    notifies :restart, 'service[pure-ftpd-mysql]'
+end
+
+# Add `usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0` to the partition with the mount point /
+template '/etc/fstab' do
+    source 'fstab.erb'
 end

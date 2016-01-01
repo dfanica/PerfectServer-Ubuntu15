@@ -28,9 +28,9 @@ end
 
 # enable the Mailman Apache configuration
 link '/etc/apache2/conf-available/mailman.conf' do
-  to '/etc/mailman/apache.conf'
-  link_type :symbolic
-  notifies :restart, 'service[apache2]'
+    to '/etc/mailman/apache.conf'
+    link_type :symbolic
+    notifies :restart, 'service[apache2]'
 end
 
 # Start the Mailman daemon
