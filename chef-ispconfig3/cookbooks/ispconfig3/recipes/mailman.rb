@@ -30,5 +30,6 @@ end
 link '/etc/apache2/conf-available/mailman.conf' do
   to '/etc/mailman/apache.conf'
   link_type :symbolic
-  notifies :restart, 'service[apache2, mailman]'
+  notifies :restart, 'service[apache2]'
+  notifies :restart, 'service[mailman]'
 end
