@@ -78,7 +78,7 @@ bash 'mysql_secure_installation' do
         mysql -u root -p#{root_password} -e "FLUSH PRIVILEGES;"
     EOH
     only_if do
-        install_type == 'server' && !File.exists?('/root/.chef/.mysql_secure_installation_complete')
+        !File.exists?('/root/.chef/.mysql_secure_installation_complete')
     end
 end
 service "mysql" do action :restart end
