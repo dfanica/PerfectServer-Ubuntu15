@@ -7,6 +7,7 @@
 # All rights reserved
 #
 
+include Chef::Mixin::ShellOut
 
 package 'mailman' do
     action :install
