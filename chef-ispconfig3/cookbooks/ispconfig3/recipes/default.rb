@@ -19,8 +19,8 @@ include_recipe 'hostupgrade::upgrade'
 
 # /bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash
 link '/bin/sh' do
-  to 'bash'
-  link_type :symbolic
+    to 'bash'
+    link_type :symbolic
 end
 
 # Disable AppArmor

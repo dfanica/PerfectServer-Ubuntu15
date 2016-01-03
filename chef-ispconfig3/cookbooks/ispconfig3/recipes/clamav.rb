@@ -31,9 +31,9 @@
     zip
     libnet-dns-perl
 }.each do |pkg|
-  package pkg do
-    action :install
-  end
+    package pkg do
+        action :install
+    end
 end
 
 # The ISPConfig 3 setup uses amavisd which loads the SpamAssassin filter library internally...
@@ -43,14 +43,14 @@ service 'spamassassin' do action [ :stop, :disable ] end
 # Edit the clamd configuration file
 # Set AllowSupplementaryGroups to TRUE
 ruby_block "edit etc hosts" do
-  block do
-    rc = Chef::Util::FileEdit.new("/etc/clamav/clamd.conf")
-    rc.search_file_replace_line(
-      /^AllowSupplementaryGroups /,
-      "AllowSupplementaryGroups true"
-    )
-    rc.write_file
-  end
+    block do
+        rc = Chef::Util::FileEdit.new("/etc/clamav/clamd.conf")
+        rc.search_file_replace_line(
+            /^AllowSupplementaryGroups /,
+            "AllowSupplementaryGroups true"
+        )
+        rc.write_file
+    end
 end
 
 # start clamav

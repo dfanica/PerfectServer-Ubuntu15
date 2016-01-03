@@ -12,7 +12,7 @@
     ntp
     ntpdate
 }.each do |pkg|
-  package pkg do
-    action :install
-  end
+    package pkg do
+        action :install
+    end
 end

@@ -59,9 +59,9 @@ end
 
 # Download the selected PHPMyAdmin archive
 tar_extract package_url do
-  target_dir home
-  creates "#{home}/phpMyAdmin-#{node['phpmyadmin']['version']}-all-languages"
-  not_if { ::File.exists?("#{home}/RELEASE-DATE-#{node['phpmyadmin']['version']}")}
+    target_dir home
+    creates "#{home}/phpMyAdmin-#{node['phpmyadmin']['version']}-all-languages"
+    not_if { ::File.exists?("#{home}/RELEASE-DATE-#{node['phpmyadmin']['version']}") }
 end
 
 directory "#{home}/conf.d" do

@@ -27,9 +27,9 @@
     debhelper
     binutils-gold
 }.each do |pkg|
-  package pkg do
-    action :install
-  end
+    package pkg do
+        action :install
+    end
 end
 
 file '/etc/cron.d/awstats' do content '' end

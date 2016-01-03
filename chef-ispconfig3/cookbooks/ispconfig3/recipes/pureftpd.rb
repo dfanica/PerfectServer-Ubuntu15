@@ -14,9 +14,9 @@
     quota
     quotatool
 }.each do |pkg|
-  package pkg do
-    action :install
-  end
+    package pkg do
+        action :install
+    end
 end
 
 # make sure that the start mode is set to standalone and set VIRTUALCHROOT=true
