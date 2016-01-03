@@ -1,9 +1,8 @@
 {
     "run_list": [
         "recipe[apt]",
-        "recipe[tar]",
-        "recipe[ispconfig3::ntp]",
         "recipe[ispconfig3]",
+        "recipe[ispconfig3::ntp]",
         "recipe[sendmail::remove]",
         "recipe[postfix]",
         "recipe[ispconfig3::postfix]",
@@ -11,6 +10,7 @@
         "recipe[apache2]",
         "recipe[php]",
         "recipe[ispconfig3::php]",
+        "recipe[tar]",
         "recipe[ispconfig3::phpmyadmin]",
         "recipe[ispconfig3::apache_config]",
         "recipe[php5-fpm::install]",
