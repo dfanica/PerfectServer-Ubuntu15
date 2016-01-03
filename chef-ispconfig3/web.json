@@ -3,7 +3,7 @@
         "recipe[apt]",
         "recipe[tar]",
         "recipe[apparmor]",
-        "recipe[ntp]",
+        "recipe[ispconfig3::ntp]",
         "recipe[ispconfig3]",
         "recipe[sendmail::remove]",
         "recipe[postfix]",
