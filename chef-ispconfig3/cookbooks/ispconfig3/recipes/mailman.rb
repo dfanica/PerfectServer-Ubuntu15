@@ -17,8 +17,11 @@ service 'mailman' do
 end
 
 # Before we can start Mailman, a first mailing list called mailman must be created
-unless File.exist?('/etc/mailman/apache.conf')
-    include_recipe 'ispconfig3::mailman_new_list'
+ispconfig3_mailman_list node['mailman']['list_name'] do
+    email node['mailman']['email']
+    password node['mailman']['password']
+    action :create
+    notifies :start, service["mailman"]
 end
 
 template '/etc/aliases' do
