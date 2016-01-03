@@ -2,7 +2,6 @@
     "run_list": [
         "recipe[apt]",
         "recipe[tar]",
-        "recipe[apparmor]",
         "recipe[ispconfig3::ntp]",
         "recipe[ispconfig3]",
         "recipe[sendmail::remove]",
@@ -19,7 +18,7 @@
         "recipe[openssl]",
         "recipe[ispconfig3::pureftpd]",
         "recipe[ispconfig3::bind]",
-        "recipe[fail2ban]",
+        "recipe[ispconfig3::fail2ban]",
         "recipe[ispconfig3::extra]"
     ]
 }
