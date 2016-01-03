@@ -21,7 +21,6 @@ ispconfig3_mailman_list node['mailman']['list_name'] do
     email node['mailman']['email']
     password node['mailman']['password']
     action :create
-    notifies :start, service["mailman"]
 end
 
 template '/etc/aliases' do
