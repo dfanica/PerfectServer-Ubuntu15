@@ -56,4 +56,4 @@ default['phpmyadmin'] = {
 # mailman
 default['mailman']['list_name'] = 'mailman'
 default['mailman']['email'] = 'mailman@danielfanica.com'
-default['mailman']['password'] = nil
+default['mailman']['password'] = 'password'

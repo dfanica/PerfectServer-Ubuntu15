@@ -11,16 +11,16 @@ package 'mailman' do
     action :install
 end
 
-# Start the Mailman daemon
-service 'mailman' do
-    action [:enable, :start]
-end
-
 # Before we can start Mailman, a first mailing list called mailman must be created
 ispconfig3_mailman_list node['mailman']['list_name'] do
     email node['mailman']['email']
     password node['mailman']['password']
     action :create
+end
+
+# Start the Mailman daemon
+service 'mailman' do
+    action [:enable, :start]
 end
 
 template '/etc/aliases' do
