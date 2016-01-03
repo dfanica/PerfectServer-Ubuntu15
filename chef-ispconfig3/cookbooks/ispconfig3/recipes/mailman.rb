@@ -17,11 +17,11 @@ service 'mailman' do
     action [:enable, :start]
 end
 
-def list_name_exists?
-    mailman_lists = `list_lists`
-    Chef::Log.info("Mailman existing lists: #{mailman_lists.chomp}")
-    $?.success?
-end
+# def list_name_exists?
+#     mailman_lists = `list_lists`
+#     Chef::Log.info("Mailman existing lists: #{mailman_lists.chomp}")
+#     $?.success?
+# end
 
 # module MyServiceChecker
 #     def my_service_running?
@@ -37,8 +37,8 @@ end
 
 # Before we can start Mailman, a first mailing list called mailman must be created
 unless File.exist?('/etc/mailman/apache.conf')
-    # unless shell_out('list_lists').stdout.downcase.include?(node['mailman']['list_name'])
-    unless list_name_exists?
+    unless shell_out('list_lists').stdout.downcase.include?(node['mailman']['list_name'])
+    # unless list_name_exists?
         execute "newlist #{node['mailman']['list_name']}" do
             command "newlist -l en -q mailman #{node['mailman']['email']} #{node['mailman']['password']}"
         end
