@@ -18,7 +18,7 @@ end
 
 # Before we can start Mailman, a first mailing list called mailman must be created
 unless File.exist?('/etc/mailman/apache.conf')
-    include_recipe 'mailman_new_list'
+    include_recipe 'ispconfig3::mailman_new_list'
 end
 
 template '/etc/aliases' do
