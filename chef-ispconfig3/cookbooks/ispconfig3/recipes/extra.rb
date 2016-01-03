@@ -15,6 +15,3 @@
     action :install
   end
 end
-
-# Disable AppArmor
-include_recipe 'apparmor'
