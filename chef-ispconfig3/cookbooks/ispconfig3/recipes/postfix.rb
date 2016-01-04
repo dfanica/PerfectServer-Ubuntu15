@@ -49,20 +49,6 @@ end
 # 5. Reload privilege tables now? [Y/n] Y
 
 root_password = node['mysql_user']['root']['password']
-# bash "mysql_secure_installation" do
-#     code <<-EOC
-#         mysql -u root -e "DELETE FROM mysql.user WHERE User='';"
-#         mysql -u root -e "DROP DATABASE test;"
-#         mysql -u root -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';"
-#         mysql -u root -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
-#         mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('#{root_password}');" -D mysql
-#         mysql -u root -p#{root_password} -e "SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('#{root_password}');" -D mysql
-#         mysql -u root -p#{root_password} -e "SET PASSWORD FOR 'root'@'::1' = PASSWORD('#{root_password}');" -D mysql
-#         mysql -u root -p#{root_password} -e "FLUSH PRIVILEGES;"
-#     EOC
-#     only_if "mysql -u root -e 'show databases'"
-# end
-
 bash 'mysql_secure_installation' do
     code <<-EOH
         mysql -uroot <<EOF && touch /root/.chef/.mysql_secure_installation_complete
@@ -70,12 +56,11 @@ bash 'mysql_secure_installation' do
             DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
             DROP DATABASE IF EXISTS test;
             DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
+            SET PASSWORD FOR 'root'@'localhost' = PASSWORD('#{root_password}');
+            SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('#{root_password}');
+            SET PASSWORD FOR 'root'@'::1' = PASSWORD('#{root_password}');
             FLUSH PRIVILEGES;
         EOF
-        mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('#{root_password}');" -D mysql
-        mysql -u root -p#{root_password} -e "SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('#{root_password}');" -D mysql
-        mysql -u root -p#{root_password} -e "SET PASSWORD FOR 'root'@'::1' = PASSWORD('#{root_password}');" -D mysql
-        mysql -u root -p#{root_password} -e "FLUSH PRIVILEGES;"
     EOH
     only_if do
         !File.exists?('/root/.chef/.mysql_secure_installation_complete')
