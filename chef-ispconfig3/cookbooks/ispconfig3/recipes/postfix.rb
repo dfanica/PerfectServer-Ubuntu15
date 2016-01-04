@@ -39,7 +39,7 @@ template '/etc/mysql/mariadb.conf.d/mysqld.cnf' do
     source 'mysqld.cnf.erb'
 end
 
-unless !File.exists?('/tmp/.mysql_secure_installation_complete') do
+unless !File.exists?('/tmp/.mysql_secure_installation_complete')
     root_password = node['mysql_user']['root']['password']
 
     #--------------------------------------------------
