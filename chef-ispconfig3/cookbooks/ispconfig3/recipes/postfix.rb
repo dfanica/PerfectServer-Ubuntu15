@@ -51,7 +51,7 @@ end
 root_password = node['mysql_user']['root']['password']
 bash 'mysql_secure_installation' do
     code <<-EOH
-        mysql -uroot <<EOF && touch /root/.chef/.mysql_secure_installation_complete
+        mysql -uroot <<EOF && touch /tmp/.mysql_secure_installation_complete
 DELETE FROM mysql.user WHERE User='';
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
 DROP DATABASE IF EXISTS test;
