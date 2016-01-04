@@ -62,8 +62,9 @@ SET PASSWORD FOR 'root'@'::1' = PASSWORD('#{root_password}');
 FLUSH PRIVILEGES;
 EOF
     EOH
+    notifies :restart, 'service[mysql]'
     only_if do
         !File.exists?('/tmp/.mysql_secure_installation_complete')
     end
 end
-service "mysql" do action :restart end
+# service "mysql" do action :restart end
