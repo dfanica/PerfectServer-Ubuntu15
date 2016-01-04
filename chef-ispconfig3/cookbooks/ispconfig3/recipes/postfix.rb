@@ -63,7 +63,7 @@ FLUSH PRIVILEGES;
 EOF
     EOH
     only_if do
-        !File.exists?('/root/.chef/.mysql_secure_installation_complete')
+        !File.exists?('/tmp/.mysql_secure_installation_complete')
     end
 end
 service "mysql" do action :restart end
