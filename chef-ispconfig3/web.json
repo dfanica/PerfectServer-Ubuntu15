@@ -19,7 +19,8 @@
         "recipe[ispconfig3::pureftpd]",
         "recipe[ispconfig3::bind]",
         "recipe[ispconfig3::fail2ban]",
-        "recipe[roundcube]",
+        "recipe[roundcube::install]",
+        "recipe[roundcube::configure]",
         "recipe[ispconfig3::extra]"
     ]
 }
