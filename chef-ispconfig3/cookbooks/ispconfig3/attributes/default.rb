@@ -1,10 +1,14 @@
 # ispcongif3
 
 # apparmor
-default['apparmor']['disable'] = true
+default['apparmor'] = {
+    'disable' => true
+}
 
 # mysql
-default['mysql_user']['root']['password'] = 't896547h69'
+default['mysql'] = {
+    'root_password' => 't896547h69'
+}
 
 # PHP.ini Settings
 default['php']['ini_settings'] = {
@@ -54,6 +58,8 @@ default['phpmyadmin'] = {
 }
 
 # mailman
-default['mailman']['list_name'] = 'mailman'
-default['mailman']['email'] = 'mailman@danielfanica.com'
-default['mailman']['password'] = 'password'
+default['mailman'] = {
+    'list_name' => 'mailman',
+    'email' => 'mailman@danielfanica.com',
+    'password' => 'password'
+}

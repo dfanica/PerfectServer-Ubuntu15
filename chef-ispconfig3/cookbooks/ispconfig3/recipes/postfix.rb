@@ -40,8 +40,6 @@ template '/etc/mysql/mariadb.conf.d/mysqld.cnf' do
 end
 
 unless File.exists?('/tmp/.mysql_secure_installation_complete')
-    root_password = node['mysql_user']['root']['password']
-
     #--------------------------------------------------
     # mysql_secure_installation 5.5
     #--------------------------------------------------
@@ -57,9 +55,9 @@ DELETE FROM mysql.user WHERE User='';
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
 DROP DATABASE IF EXISTS test;
 DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
-SET PASSWORD FOR 'root'@'localhost' = PASSWORD('#{root_password}');
-SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('#{root_password}');
-SET PASSWORD FOR 'root'@'::1' = PASSWORD('#{root_password}');
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('#{node['mysql']['root_password']}');
+SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('#{node['mysql']['root_password']}');
+SET PASSWORD FOR 'root'@'::1' = PASSWORD('#{node['mysql']['root_password']}');
 FLUSH PRIVILEGES;
 EOF
         EOH
