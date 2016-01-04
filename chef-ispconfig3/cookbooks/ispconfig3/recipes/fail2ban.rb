@@ -28,7 +28,8 @@ template '/etc/fail2ban/filter.d/pureftpd.conf' do
 end
 
 template '/etc/fail2ban/filter.d/dovecot-pop3imap.conf' do
-    s
+    source 'dovecot-pop3imap.conf.erb'
+end
 
 template '/etc/fail2ban/filter.d/postfix-sasl.conf' do
     source 'postfix-sasl.conf.erb'
