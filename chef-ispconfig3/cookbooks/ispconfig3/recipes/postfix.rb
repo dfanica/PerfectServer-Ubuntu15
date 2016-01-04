@@ -52,15 +52,15 @@ root_password = node['mysql_user']['root']['password']
 bash 'mysql_secure_installation' do
     code <<-EOH
         mysql -uroot <<EOF && touch /root/.chef/.mysql_secure_installation_complete
-            DELETE FROM mysql.user WHERE User='';
-            DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
-            DROP DATABASE IF EXISTS test;
-            DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
-            SET PASSWORD FOR 'root'@'localhost' = PASSWORD('#{root_password}');
-            SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('#{root_password}');
-            SET PASSWORD FOR 'root'@'::1' = PASSWORD('#{root_password}');
-            FLUSH PRIVILEGES;
-        EOF
+DELETE FROM mysql.user WHERE User='';
+DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+DROP DATABASE IF EXISTS test;
+DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('#{root_password}');
+SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('#{root_password}');
+SET PASSWORD FOR 'root'@'::1' = PASSWORD('#{root_password}');
+FLUSH PRIVILEGES;
+EOF
     EOH
     only_if do
         !File.exists?('/root/.chef/.mysql_secure_installation_complete')
