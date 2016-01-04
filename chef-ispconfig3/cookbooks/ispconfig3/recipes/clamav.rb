@@ -53,6 +53,12 @@ ruby_block "edit etc hosts" do
     end
 end
 
+# stop if already running (in case server was restarted)
+# this will prevent `STDOUT: ERROR: /var/log/clamav/freshclam.log is locked by another process`
+service 'clamav-freshclam' do
+    action :stop
+end
+
 # start clamav
 execute 'freshclam'
 service 'clamav-daemon' do action :start end
