@@ -28,12 +28,16 @@ template '/etc/fail2ban/filter.d/pureftpd.conf' do
 end
 
 template '/etc/fail2ban/filter.d/dovecot-pop3imap.conf' do
-    source 'dovecot-pop3imap.conf.erb'
-end
+    s
 
-execute 'echo "ignoreregex =" >> /etc/fail2ban/filter.d/postfix-sasl.conf' do
+template '/etc/fail2ban/filter.d/postfix-sasl.conf' do
+    source 'postfix-sasl.conf.erb'
     notifies :restart, "service[fail2ban]"
 end
+
+# execute 'echo "ignoreregex =" >> /etc/fail2ban/filter.d/postfix-sasl.conf' do
+#     notifies :restart, "service[fail2ban]"
+# end
 
 # service "fail2ban" do
 #     action :restart
