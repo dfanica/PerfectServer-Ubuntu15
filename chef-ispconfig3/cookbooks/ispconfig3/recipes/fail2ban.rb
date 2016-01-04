@@ -24,4 +24,7 @@ template '/etc/fail2ban/filter.d/dovecot-pop3imap.conf' do
 end
 
 execute 'echo "ignoreregex =" >> /etc/fail2ban/filter.d/postfix-sasl.conf'
-service "fail2ban" do action :restart end
+service "fail2ban" do
+    action :restart
+    ignore_failure true
+end
