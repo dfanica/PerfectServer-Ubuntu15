@@ -1,0 +1,7 @@
+{
+    "run_list": [
+        "recipe[apt]",
+        "recipe[zip]",
+        "recipe[ispconfig3]"
+    ]
+}
