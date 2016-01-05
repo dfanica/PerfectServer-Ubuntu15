@@ -13,5 +13,7 @@ bash 'ispconfig_setup-master' do
         cd /tmp
         wget --no-check-certificate #{node['ispconfig']['zip_url']}
         unzip #{::File.basename(node['ispconfig']['zip_url'])}
+        cd ispconfig_setup-master/
+        yes | ./install.sh
     EOH
 end
