@@ -42,7 +42,7 @@ end
 ruby_block "remove commented lines from roundcube.conf" do
     block do
         rc = Chef::Util::FileEdit.new("/etc/apache2/conf-enabled/roundcube.conf")
-        rc.search_file_replace_line(/^(#|Alias\s).+?$\r\n/, "")
+        rc.search_file_replace_line(/^(#|Alias\s).+?$/, "")
         rc.write_file
     end
 end
