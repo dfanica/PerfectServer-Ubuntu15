@@ -1,8 +1,8 @@
 {
     "run_list": [
         "recipe[apt]",
-        "recipe[zip]",
         "recipe[ispconfig3]",
+        "recipe[zip]",
         "recipe[ispconfig3::ntp]",
         "recipe[sendmail::remove]",
         "recipe[openssl]",
