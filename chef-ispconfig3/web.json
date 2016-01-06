@@ -2,9 +2,9 @@
     "run_list": [
         "recipe[apt]",
         "recipe[ispconfig3]",
-        "recipe[zip]",
         "recipe[ispconfig3::ntp]",
         "recipe[sendmail::remove]",
+        "recipe[zip]",
         "recipe[openssl]",
         "recipe[postfix]",
         "recipe[ispconfig3::postfix]",
