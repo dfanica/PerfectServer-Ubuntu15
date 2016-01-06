@@ -31,3 +31,20 @@ end
         action :install
     end
 end
+
+template '/etc/apache2/conf-enabled/roundcube.conf' do
+    source 'roundcube.conf.erb'
+    notifies :restart, 'service[apache2]'
+end
+
+# prevent Roundcube from showing a server name input field in the login form
+ruby_block "change the default host to localhost" do
+    block do
+        rc = Chef::Util::FileEdit.new("/etc/roundcube/main.inc.php")
+        rc.search_file_replace_line(
+            /^$rcmail_config['default_host'] = /,
+            "$rcmail_config['default_host'] = 'localhost';"
+        )
+        rc.write_file
+    end
+end

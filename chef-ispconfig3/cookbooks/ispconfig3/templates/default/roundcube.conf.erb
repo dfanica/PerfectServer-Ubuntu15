@@ -1,0 +1,57 @@
+Alias /roundcube/program/js/tiny_mce/ /usr/share/tinymce/www/
+Alias /roundcube /var/lib/roundcube
+Alias /webmail/program/js/tiny_mce/ /usr/share/tinymce/www/
+Alias /webmail /var/lib/roundcube
+
+<Directory "/usr/share/tinymce/www/">
+  Options Indexes MultiViews FollowSymLinks
+  AllowOverride None
+  <IfVersion >= 2.3>
+    Require all granted
+  </IfVersion>
+  <IfVersion < 2.3>
+    Order allow,deny
+    Allow from all
+  </IfVersion>
+</Directory>
+
+<Directory /var/lib/roundcube/>
+  Options +FollowSymLinks
+  AllowOverride All
+  <IfVersion >= 2.3>
+    Require all granted
+  </IfVersion>
+  <IfVersion < 2.3>
+    Order allow,deny
+    Allow from all
+  </IfVersion>
+</Directory>
+
+<Directory /var/lib/roundcube/config>
+  Options -FollowSymLinks
+  AllowOverride None
+</Directory>
+
+<Directory /var/lib/roundcube/temp>
+  Options -FollowSymLinks
+  AllowOverride None
+  <IfVersion >= 2.3>
+    Require all denied
+  </IfVersion>
+  <IfVersion < 2.3>
+    Order allow,deny
+    Deny from all
+  </IfVersion>
+</Directory>
+
+<Directory /var/lib/roundcube/logs>
+  Options -FollowSymLinks
+  AllowOverride None
+  <IfVersion >= 2.3>
+    Require all denied
+  </IfVersion>
+  <IfVersion < 2.3>
+    Order allow,deny
+    Deny from all
+  </IfVersion>
+</Directory>
