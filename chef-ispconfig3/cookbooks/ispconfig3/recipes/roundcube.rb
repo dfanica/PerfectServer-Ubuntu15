@@ -11,10 +11,10 @@ bash 'installing roundcube...' do
         RANDPWD=`date +%N%s | md5sum`
         echo "roundcube-core roundcube/dbconfig-install boolean true" | debconf-set-selections
         echo "roundcube-core roundcube/database-type select mysql" | debconf-set-selections
-        echo "roundcube-core roundcube/mysql/admin-pass password $CFG_MYSQL_ROOT_PWD" | debconf-set-selections
+        echo "roundcube-core roundcube/mysql/admin-pass password #{node['mysql']['root_password']}" | debconf-set-selections
         echo "roundcube-core roundcube/db/dbname string roundcube" | debconf-set-selections
-        echo "roundcube-core roundcube/mysql/app-pass password $RANDOMPWD" | debconf-set-selections
-        echo "roundcube-core roundcube/app-password-confirm password $RANDPWD" | debconf-set-selections
+        echo "roundcube-core roundcube/mysql/app-pass password password" | debconf-set-selections
+        echo "roundcube-core roundcube/app-password-confirm password password" | debconf-set-selections
         apt-get -y install roundcube roundcube-mysql git > /dev/null 2>&1
     EOH
 end
