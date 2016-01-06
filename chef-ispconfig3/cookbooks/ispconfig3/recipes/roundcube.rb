@@ -42,7 +42,7 @@ end
 ruby_block "remove commented lines from roundcube.conf" do
     block do
         rc = Chef::Util::FileEdit.new("/etc/apache2/conf-enabled/roundcube.conf")
-        rc.search_file_replace_line(/^(#|Alias)?\s/, "")
+        rc.search_file_replace_line(/^(#|Alias\s).+?$/, "")
         rc.write_file
     end
 end
@@ -50,12 +50,12 @@ end
 # execute "sed -i '1iAlias /roundcube /var/lib/roundcube' /etc/apache2/conf-enabled/roundcube.conf"
 # execute "sed -i '1iAlias /webmail/program/js/tiny_mce/ /usr/share/tinymce/www/' /etc/apache2/conf-enabled/roundcube.conf"
 # execute "sed -i '1iAlias /webmail /var/lib/roundcube' /etc/apache2/conf-enabled/roundcube.conf"
-%w{
-    Alias /roundcube/program/js/tiny_mce/ /usr/share/tinymce/www/
-    Alias /roundcube /var/lib/roundcube
-    Alias /webmail/program/js/tiny_mce/ /usr/share/tinymce/www/
-    Alias /webmail /var/lib/roundcube
-}.each do |als|
+[
+    'Alias /roundcube/program/js/tiny_mce/ /usr/share/tinymce/www/',
+    'Alias /roundcube /var/lib/roundcube',
+    'Alias /webmail/program/js/tiny_mce/ /usr/share/tinymce/www/',
+    'Alias /webmail /var/lib/roundcube'
+].each do |als|
     execute "sed -i '1i#{als}' /etc/apache2/conf-enabled/roundcube.conf"
 end
 
