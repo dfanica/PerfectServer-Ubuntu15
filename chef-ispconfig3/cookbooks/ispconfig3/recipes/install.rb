@@ -69,4 +69,18 @@ bash 'generate ISPConfig configuration file' do
     not_if { ::File.exists?(autoinstall) }
 end
 
-execute "php -q #{node['ispcongif']['install_path']}/install/install.php --autoinstall=#{autoinstall}"
+bash 'Installing ISPConfig3...' do
+    code <<-EOH
+        cd #{node['ispcongif']['install_path']}/install
+        php -q install.php --autoinstall=autoinstall.ini
+    EOH
+    not_if { ::File.exists?('/usr/local/ispconfig/server/server.php') }
+end
+
+bash 'Updating ISPConfig3...' do
+    code <<-EOH
+        cd #{node['ispcongif']['install_path']}/install
+        php -q update.php --autoinstall=autoinstall.ini
+    EOH
+    only_if { ::File.exists?('/usr/local/ispconfig/server/server.php') }
+end
