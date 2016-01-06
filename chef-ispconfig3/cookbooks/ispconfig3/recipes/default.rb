@@ -14,7 +14,7 @@ end
 
 # update the system
 # include_recipe "apt"
-execute 'apt-get update'
+# execute 'apt-get update'
 include_recipe 'hostupgrade::upgrade'
 
 # /bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash
