@@ -10,7 +10,7 @@
 bash 'Installing Postfix...' do
     code <<-EOH
         echo "postfix postfix/main_mailer_type select Internet Site" | debconf-set-selections
-        echo "postfix postfix/mailname string mail.danielfanica.com | debconf-set-selections
+        echo "postfix postfix/mailname string mail.danielfanica.com" | debconf-set-selections
         apt-get -yqq install postfix postfix-mysql postfix-doc getmail4 > /dev/null 2>&1
     EOH
 end
