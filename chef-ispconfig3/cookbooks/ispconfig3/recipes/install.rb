@@ -15,7 +15,7 @@ tar_extract node['ispcongif']['install_file'] do
 end
 
 autoinstall = "#{node['ispcongif']['install_path']}/install/autoinstall.ini"
-bash 'installing ISPConfig3...' do
+bash 'generate ISPConfig configuration file' do
     code <<-EOH
         touch #{autoinstall}
         echo "[install]" >> #{autoinstall}
@@ -30,7 +30,6 @@ bash 'installing ISPConfig3...' do
         echo "http_server=apache" >> #{autoinstall}
         echo "ispconfig_port=8080" >> #{autoinstall}
         echo "ispconfig_use_ssl=y" >> #{autoinstall}
-        echo
         echo "[ssl_cert]" >> #{autoinstall}
         echo "ssl_cert_country=IE" >> #{autoinstall}
         echo "ssl_cert_state=Ireland" >> #{autoinstall}
@@ -38,7 +37,6 @@ bash 'installing ISPConfig3...' do
         echo "ssl_cert_organisation=WyGom" >> #{autoinstall}
         echo "ssl_cert_organisation_unit=IT department" >> #{autoinstall}
         echo "ssl_cert_common_name=danielfanica.com" >> #{autoinstall}
-        echo
         echo "[expert]" >> #{autoinstall}
         echo "mysql_ispconfig_user=ispconfig" >> #{autoinstall}
         echo "mysql_ispconfig_password=afStEratXBsgatRtsa42CadwhQ" >> #{autoinstall}
@@ -55,7 +53,6 @@ bash 'installing ISPConfig3...' do
         echo "configure_nginx=n" >> #{autoinstall}
         echo "configure_firewall=y" >> #{autoinstall}
         echo "install_ispconfig_web_interface=y" >> #{autoinstall}
-        echo
         echo "[update]" >> #{autoinstall}
         echo "do_backup=yes" >> #{autoinstall}
         echo "mysql_root_password=#{node['mysql']['root_password']}" >> #{autoinstall}
@@ -72,4 +69,4 @@ bash 'installing ISPConfig3...' do
     not_if { ::File.exists?(autoinstall) }
 end
 
-#php -q install.php --autoinstall=autoinstall.ini
+execute "php -q #{node['ispcongif']['install_path']}/install/install.php --autoinstall=#{autoinstall}"
