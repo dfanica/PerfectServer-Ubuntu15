@@ -1,44 +1,15 @@
-PefectServer Chef Recipe
+ISPConfig3 - Chef Recipe
 ========================
 
-A complete single-machine hosting server setup using chef. It installs all components needed for a single server hosting environment.
-It fulfills all requirements to install ISPConfig3 (http://www.ispconfig.org/).
+Configuration for Debian 7 / 8
 
-Tested on a Ubuntu 15.04 bare image.
+Tested on a OVH Debian 7/8 bare image.
 
-Installed Components:
----------------------
-
-#### Services:
-
-- apache2 (Mods: php5, ssl, rewrite, fastcgi, fcgid, suexec)
-- php5 (with curl, mysql, gd apc)
-- mysql
-- postfix
-- postfix GLD
-- dovecot
-- pureftpd
-
-
-#### Tools:
-
-- joe
-- htop
-- unzip
-- bzip2
-- zip
-- pwgen
-- ncftp
-
-- ntp
-- ntpdate
-
-- rkhunter
-- fail2ban
-- graphicsmagick
-
-
-#### Applications:
-
-- phpmyadmin
-- roundcube
+You can Choose during install
+-----------------------------
+Apache / Nginx
+Dovecot or Courier
+Quota On/Off
+Jailkit On/Off
+Squirrelmail / Roundcube
+ISPConfig 3 Standard / Expert mode
