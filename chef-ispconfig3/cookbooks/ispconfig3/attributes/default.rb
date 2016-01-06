@@ -1,6 +1,6 @@
 # ispcongif3
 default['ispcongif'] = {
-    'install_file' => 'http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz'
+    'install_file' => 'http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz',
     'install_path' => '/tmp/ispconfig3_install'
 }
 
