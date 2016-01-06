@@ -8,7 +8,6 @@
 #
 bash 'installing roundcube...' do
     code <<-EOH
-        RANDPWD=`date +%N%s | md5sum`
         echo "roundcube-core roundcube/dbconfig-install boolean true" | debconf-set-selections
         echo "roundcube-core roundcube/database-type select mysql" | debconf-set-selections
         echo "roundcube-core roundcube/mysql/admin-pass password #{node['mysql']['root_password']}" | debconf-set-selections
