@@ -16,7 +16,7 @@ end
 
 bash 'installing ISPConfig3...' do
     code <<-EOH
-        touch #{node['ispcongif']['install_path']}/autoinstall.ini
+        touch #{node['ispcongif']['install_path']}/install/autoinstall.ini
         echo "[install]" > autoinstall.ini
         echo "language=en" >> autoinstall.ini
         echo "install_mode=standard" >> autoinstall.ini
@@ -68,7 +68,7 @@ bash 'installing ISPConfig3...' do
         echo "create_new_ispconfig_ssl_cert=no" >> autoinstall.ini
         echo "reconfigure_crontab=yes" >> autoinstall.ini
     EOH
-    not_if { ::File.exists?("#{node['ispcongif']['install_path']}/autoinstall.ini") }
+    not_if { ::File.exists?("#{node['ispcongif']['install_path']}/install/autoinstall.ini") }
 end
 
 #php -q install.php --autoinstall=autoinstall.ini
