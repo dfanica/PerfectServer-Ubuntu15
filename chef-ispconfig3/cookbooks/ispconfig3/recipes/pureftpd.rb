@@ -42,6 +42,14 @@ directory '/etc/ssl/private/' do
 end
 
 # openssl req -x509 -nodes -days 7300 -newkey rsa:2048 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem
+#
+# Country Name (2 letter code) [AU]: <-- Enter your Country Name (e.g., "DE").
+# State or Province Name (full name) [Some-State]:<-- Enter your State or Province Name.
+# Locality Name (eg, city) []:<-- Enter your City.
+# Organization Name (eg, company) [Internet Widgits Pty Ltd]:<-- Enter your Organization Name (e.g., the name of your company).
+# Organizational Unit Name (eg, section) []:<-- Enter your Organizational Unit Name (e.g. "IT Department").
+# Common Name (eg, YOUR name) []:<-- Enter the Fully Qualified Domain Name of the system (e.g. "server1.example.com").
+# Email Address []:<-- Enter your Email Address.
 pureftpd_pem_cert = '/etc/ssl/private/pure-ftpd.pem'
 
 openssl_rsa_key pureftpd_pem_cert do

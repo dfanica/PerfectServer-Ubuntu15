@@ -14,7 +14,6 @@
     clamav
     clamav-daemon
     zoo
-    unzip
     bzip2
     arj
     nomarch
@@ -28,7 +27,6 @@
     libio-string-perl
     libio-socket-ssl-perl
     libnet-ident-perl
-    zip
     libnet-dns-perl
 }.each do |pkg|
     package pkg do
