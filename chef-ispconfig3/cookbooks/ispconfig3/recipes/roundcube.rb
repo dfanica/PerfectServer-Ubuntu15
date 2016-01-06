@@ -17,6 +17,7 @@ bash 'installing roundcube...' do
         echo "roundcube-core roundcube/app-password-confirm password password" | debconf-set-selections
         apt-get -y install roundcube roundcube-mysql git > /dev/null 2>&1
     EOH
+    not_if { ::File.exists?('/etc/roundcube/apache.conf') }
 end
 
 # Install packages
