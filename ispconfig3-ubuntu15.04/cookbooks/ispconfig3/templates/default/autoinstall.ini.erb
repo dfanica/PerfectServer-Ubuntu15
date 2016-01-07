@@ -1,0 +1,50 @@
+[install]
+language=en
+install_mode=standard
+hostname=danielfanica.com
+mysql_hostname=localhost
+mysql_root_user=root
+mysql_root_password=<%= @mysql_root_password %>
+mysql_database=dbispconfig
+mysql_charset=utf8
+http_server=apache
+ispconfig_port=<%= @ispcongif_port %>
+ispconfig_use_ssl=y
+
+[ssl_cert]
+ssl_cert_country=<%= @ssl_cert_country %>
+ssl_cert_state=<%= @ssl_cert_state %>
+ssl_cert_locality=<%= @ssl_cert_locality %>
+ssl_cert_organisation=<%= @ssl_cert_organisation %>
+ssl_cert_organisation_unit=<%= @ssl_cert_organisation_unit %>
+ssl_cert_common_name=<%= @ssl_cert_common_name %>
+
+[expert]
+mysql_ispconfig_user=ispconfig
+mysql_ispconfig_password=afStEratXBsgatRtsa42CadwhQ
+join_multiserver_setup=n
+mysql_master_hostname=master.example.com
+mysql_master_root_user=root
+mysql_master_root_password=ispconfig
+mysql_master_database=dbispconfig
+configure_mail=y
+configure_jailkit=
+configure_ftp=y
+configure_dns=y
+configure_apache=y
+configure_nginx=n
+configure_firewall=y
+install_ispconfig_web_interface=y
+
+[update]
+do_backup=yes
+mysql_root_password=<%= @mysql_root_password %>
+mysql_master_hostname=master.example.com
+mysql_master_root_user=root
+mysql_master_root_password=ispconfig
+mysql_master_database=dbispconfig
+reconfigure_permissions_in_master_database=no
+reconfigure_services=yes
+ispconfig_port=<%= @ispcongif_port %>
+create_new_ispconfig_ssl_cert=no
+reconfigure_crontab=yes
