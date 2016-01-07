@@ -1,7 +1,7 @@
 {
     "run_list": [
         "recipe[apt]",
-        "recipe[hostupgrade]",
+        "recipe[hostupgrade::upgrade]",
         "recipe[ispconfig3]"
     ]
 }
