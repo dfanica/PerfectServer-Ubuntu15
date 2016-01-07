@@ -6,6 +6,13 @@ default['ispcongif'] = {
     'port' => 8080
 }
 
+#Update System and Upgrade
+default["hostupgrade"] = {
+    'update_system' => true,
+    'upgrade_system' => true,
+    'first_time_only' => true
+}
+
 # SSL Certificate
 default['ssl_cert'] = {
     'country' => 'IE',
