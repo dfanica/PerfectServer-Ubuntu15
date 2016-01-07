@@ -1,0 +1,34 @@
+{
+  "name": "ispconfig3",
+  "description": "Installs/Configures ISPConfig3 on Ubuntu 15.04",
+  "long_description": "",
+  "maintainer_email": "contact@danielfanica.com",
+  "license": "Apache Public License 2.0",
+  "platforms": {
+    "ubuntu": "== 15.04"
+  },
+  "dependencies": {
+    "hostupgrade": ">= 0.0.0",
+    "apparmor": ">= 0.0.0"
+  },
+  "recommendations": {
+    "apt": ">= 0.0.0"
+  },
+  "suggestions": {
+    "percona": ">= 0.0.0",
+    "mysql": ">= 0.0.0"
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "1.0.0"
+}
