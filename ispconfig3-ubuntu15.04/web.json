@@ -1,9 +1,6 @@
 {
     "run_list": [
         "recipe[apt]",
-        "recipe[hostupgrade]",
-        "recipe[apparmor]",
-        "recipe[sendmail]",
         "recipe[ispconfig3]"
     ]
 }
