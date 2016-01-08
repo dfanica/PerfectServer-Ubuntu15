@@ -16,6 +16,9 @@
 
 # export the DEBIAN_FRONTEND variable
 # execute 'export DEBIAN_FRONTEND="noninteractive"'
+magic_shell_environment 'DEBIAN_FRONTEND' do
+    value 'noninteractive'
+end
 
 
 # =================================================================
@@ -54,7 +57,6 @@ end
 
 # /bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash
 execute 'echo dash dash/sh boolean false | debconf-set-selections'
-# execute 'export DEBIAN_FRONTEND="noninteractive"; dpkg-reconfigure dash'
 execute 'reconfigure dash' do
     command 'dpkg-reconfigure dash'
     action :run
@@ -85,7 +87,7 @@ include_recipe 'sendmail::remove'
     "postfix        postfix/main_mailer_type        select      Internet Site",
     "postfix        postfix/mailname                string      #{node['ispcongif']['hostname']}"
 ].each do |selection|
-    execute "debconf-set-selections <<< \"#{selection}\""
+    execute "echo #{selection} | debconf-set-selections"
 end
 
 %w{
@@ -106,6 +108,7 @@ end
 }.each do |pkg|
     package pkg do
         action :install
+        environment ({'DEBIAN_FRONTEND' => 'noninteractive'})
     end
 end
 
