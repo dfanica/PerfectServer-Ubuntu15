@@ -20,7 +20,8 @@ default['ssl_cert'] = {
     'locality' => 'Dublin',
     'organisation' => 'WyGom',
     'organisation_unit' => 'IT department',
-    'common_name' => 'danielfanica.com'
+    'common_name' => 'danielfanica.com',
+    'email_address' => 'contact@danielfanica.com'
 }
 
 # apparmor

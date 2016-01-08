@@ -1,0 +1,23 @@
+#!/bin/bash
+
+SSL_CERT=$(expect -c "
+set timeout 10
+spawn openssl req -x509 -nodes -days 7300 -newkey rsa:2048 -keyout <%= @pureftpd_pem_cert %> -out <%= @pureftpd_pem_cert %>
+expect \"Country Name (2 letter code) \[AU\]:\"
+send \"<%= @ssl_cert_country %>\r\"
+expect \"State or Province Name (full name) \[Some-State\]:\"
+send \"<%= @ssl_cert_state %>\r\"
+expect \"Locality Name (eg, city) \[\]:\"
+send \"<%= @ssl_cert_locality %>\r\"
+expect \"Organization Name (eg, company) \[Internet Widgits Pty Ltd\]:\"
+send \"<%= @ssl_cert_organisation %>\r\"
+expect \"Organizational Unit Name (eg, section) \[\]:\"
+send \"<%= @ssl_cert_organisation_unit %>\r\"
+expect \"Common Name (eg, YOUR name) \[\]:\"
+send \"<%= @ssl_cert_common_name %>\r\"
+expect \"Email Address \[\]:\"
+send \"<%= @ssl_cert_email_address %>\r\"
+expect eof
+")
+
+echo "$SSL_CERT"
