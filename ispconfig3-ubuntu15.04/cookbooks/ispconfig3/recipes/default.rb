@@ -15,7 +15,6 @@
 # https://www.howtoforge.com/tutorial/perfect-server-ubuntu-15.04-with-apache-php-myqsl-pureftpd-bind-postfix-doveot-and-ispconfig/
 
 # export the DEBIAN_FRONTEND variable
-# execute 'export DEBIAN_FRONTEND="noninteractive"'
 magic_shell_environment 'DEBIAN_FRONTEND' do
     value 'noninteractive'
 end
@@ -60,7 +59,7 @@ execute 'echo dash dash/sh boolean false | debconf-set-selections'
 execute 'reconfigure dash' do
     command 'dpkg-reconfigure dash'
     action :run
-    # environment ({'DEBIAN_FRONTEND' => 'noninteractive'})
+    environment ({'DEBIAN_FRONTEND' => 'noninteractive'})
 end
 
 # =================
@@ -114,7 +113,10 @@ end
 # Open the TLS/SSL and submission ports in Postfix
 template '/etc/postfix/master.cf' do
     source 'master.cf.erb'
-    # notifies :restart, 'service[postfix]'
+end
+
+service 'postfix' do
+    action :restart
 end
 
 # make MySQL listen on all interfaces
@@ -130,7 +132,10 @@ end
 
 execute 'Securing/Cleaning... Set root password in MariaDB' do
     command "sh /tmp/mysql_secure.sh"
-    # notifies :restart, 'service[mysql]'
+end
+
+service 'mysql' do
+    action :restart
 end
 
 
