@@ -107,7 +107,7 @@ end
 # Open the TLS/SSL and submission ports in Postfix
 template '/etc/postfix/master.cf' do
     source 'master.cf.erb'
-    notifies :restart, 'service[postfix]'
+    # notifies :restart, 'service[postfix]'
 end
 
 # make MySQL listen on all interfaces
