@@ -123,7 +123,7 @@ end
 
 execute 'Securing/Cleaning... Set root password in MariaDB' do
     command "sh /tmp/mysql_secure.sh"
-    notifies :restart, 'service[mysql]'
+    # notifies :restart, 'service[mysql]'
 end
 
 
