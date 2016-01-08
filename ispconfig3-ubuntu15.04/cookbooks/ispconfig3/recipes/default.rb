@@ -80,10 +80,10 @@ include_recipe 'sendmail::remove'
 # General type of mail configuration: <-- Internet Site
 # System mail name: <-- example.com
 [
-    "dovecot-core   dovecot-core/create-ssl-cert    boolean     true",
-    "dovecot-core   dovecot-core/ssl-cert-name      string      #{node['ispcongif']['hostname']}",
-    "postfix        postfix/main_mailer_type        select      Internet Site",
-    "postfix        postfix/mailname                string      #{node['ispcongif']['hostname']}"
+    "dovecot-core dovecot-core/create-ssl-cert boolean true",
+    "dovecot-core dovecot-core/ssl-cert-name string #{node['ispcongif']['hostname']}",
+    "postfix postfix/main_mailer_type select Internet Site",
+    "postfix postfix/mailname string #{node['ispcongif']['hostname']}"
 ].each do |selection|
     execute "echo #{selection} | debconf-set-selections"
 end
@@ -130,6 +130,14 @@ template "/tmp/mysql_secure.sh" do
 end
 
 # mysql_secure_installation
+#
+# Enter current password for root (enter for none): <-- press enter
+# Set root password? [Y/n] <-- y
+# New password: <-- Enter the new MariaDB root password here
+# Re-enter new password: <-- Repeat the password
+# Remove anonymous users? [Y/n] <-- y
+# Disallow root login remotely? [Y/n] <-- y
+# Reload privilege tables now? [Y/n] <-- y
 execute 'Securing/Cleaning... Set root password in MariaDB' do
     command "sh /tmp/mysql_secure.sh"
 end
@@ -209,10 +217,10 @@ service 'clamav-daemon' do action :start end
 # Password of the database's administrative user: <-- MySQL root password here.
 # MySQL application password for phpmyadmin: <-- Press enter
 [
-    "phpmyadmin         phpmyadmin/reconfigure-webserver    multiselect     apache2",
-    "dbconfig-common    dbconfig-common/dbconfig-install    boolean         true",
-    "phpmyadmin         phpmyadmin/mysql/admin-pass         password        #{node['mysql']['root_password']}",
-    "phpmyadmin         phpmyadmin/mysql/app-pass           password"
+    "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2",
+    "dbconfig-common dbconfig-common/dbconfig-install boolean true",
+    "phpmyadmin phpmyadmin/mysql/admin-pass password #{node['mysql']['root_password']}",
+    "phpmyadmin phpmyadmin/mysql/app-pass password"
 ].each do |selection|
     execute "echo #{selection} | debconf-set-selections"
 end
@@ -318,8 +326,8 @@ end
 # Languages to support: <-- en (English)
 # Missing site list <-- Ok
 [
-    "mailman    mailman/create_site_list    note    en",
-    "mailman    mailman/used_languages      string  Ok"
+    "mailman mailman/create_site_list note en",
+    "mailman mailman/used_languages string Ok"
 ].each do |selection|
     execute "echo #{selection} | debconf-set-selections"
 end

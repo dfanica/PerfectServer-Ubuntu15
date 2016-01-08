@@ -31,7 +31,8 @@ default['apparmor'] = {
 
 # mysql
 default['mysql'] = {
-    'root_password' => 't896547h69'
+    # 'root_password' => 't896547h69'
+    'root_password' => ''
 }
 
 # PHP.ini Settings
