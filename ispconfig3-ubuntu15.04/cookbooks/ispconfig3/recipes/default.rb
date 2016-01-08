@@ -108,7 +108,6 @@ end
 }.each do |pkg|
     package pkg do
         action :install
-        environment ({'DEBIAN_FRONTEND' => 'noninteractive'})
     end
 end
 
