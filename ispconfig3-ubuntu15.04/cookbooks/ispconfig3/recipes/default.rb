@@ -454,12 +454,13 @@ execute 'mount -o remount /'
 execute 'quotacheck -avugm' do
     command 'quotacheck -avugm > /dev/null 2>&1'
     ignore_failure true
+    only_if 'quotaon -avug > /dev/null 2>&1'
 end
 
-execute 'quotaon -avug' do
-    command 'quotaon -avug > /dev/null 2>&1'
-    ignore_failure true
-end
+# execute 'quotaon -avug' do
+#     command 'quotaon -avug > /dev/null 2>&1'
+#     ignore_failure true
+# end
 
 
 # =========================
