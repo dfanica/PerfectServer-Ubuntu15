@@ -445,7 +445,7 @@ service "pure-ftpd-mysql" do action :start end
 # sed -i '/tmpfs/!s/defaults/defaults,usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0/' /etc/fstab
 execute 'usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0 to /etc/fstab' do
     command "sed -i '/tmpfs/!s/defaults/defaults,usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0/' /etc/fstab"
-    not_if ("cat /etc/fstab | grep ',usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0'")
+    only_if ("cat /etc/fstab | grep ',usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0'")
 end
 
 # enable quota
