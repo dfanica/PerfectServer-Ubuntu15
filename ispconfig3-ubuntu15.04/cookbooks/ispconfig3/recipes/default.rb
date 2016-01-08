@@ -432,10 +432,13 @@ template '/etc/fstab' do
     source 'fstab.erb'
 end
 
-# enable quota
-execute 'mount -o remount /'
-execute 'quotacheck -avugm > /dev/null 2>&1'
-execute 'quotaon -avug > /dev/null 2>&1'
+bash 'enable quota' do
+    code <<-EOH
+        mount -o remount /
+        quotacheck -avugm > /dev/null 2>&1
+        quotaon -avug > /dev/null 2>&1
+    EOH
+end
 
 
 # =========================
