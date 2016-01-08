@@ -15,7 +15,11 @@
 # https://www.howtoforge.com/tutorial/perfect-server-ubuntu-15.04-with-apache-php-myqsl-pureftpd-bind-postfix-doveot-and-ispconfig/
 
 # export the DEBIAN_FRONTEND variable
-execute 'sudo export DEBIAN_FRONTEND="noninteractive"'
+bash 'set variable DEBIAN_FRONTEND to `noninteractive`' do
+    code <<-EOH
+        export DEBIAN_FRONTEND="noninteractive"
+    EOH
+end
 
 
 # =================================================================
@@ -55,8 +59,8 @@ end
 # /bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash
 bash 'debconf::dash/sh to false' do
     code <<-EOH
-        sudo debconf-set-selections <<< "dash dash/sh boolean false"
-        sudo dpkg-reconfigure dash
+        debconf-set-selections <<< "dash dash/sh boolean false"
+        dpkg-reconfigure dash
     EOH
 end
 
