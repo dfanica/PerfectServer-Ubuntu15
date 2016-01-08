@@ -53,8 +53,12 @@ end
 # =========================
 
 # /bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash
-execute "debconf-set-selections <<< \"dash dash/sh boolean false\" > /dev/null 2>&1"
-execute 'dpkg-reconfigure dash'
+bash 'debconf::dash/sh to false' do
+    code <<-EOH
+        debconf-set-selections <<< "dash dash/sh boolean false"
+        dpkg-reconfigure dash
+    EOH
+end
 
 # =================
 # Disable AppArmor
