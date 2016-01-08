@@ -454,13 +454,8 @@ execute 'mount -o remount /'
 execute 'run quotaon' do
     command 'quotaon -avug > /dev/null 2>&1'
     ignore_failure true
-    only_if 'quotacheck -avugm > /dev/null 2>&1'
+    not_if 'quotacheck -avugm > /dev/null 2>&1'
 end
-
-# execute 'quotaon -avug' do
-#     command 'quotaon -avug > /dev/null 2>&1'
-#     ignore_failure true
-# end
 
 
 # =========================
