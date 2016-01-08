@@ -54,8 +54,10 @@ end
 
 # /bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash
 bash 'debconf::dash/sh to false' do
+    user 'root'
+    group 'root'
     code <<-EOH
-        sudo debconf-set-selections <<< "dash dash/sh boolean false"
+        debconf-set-selections <<< "dash dash/sh boolean false"
         dpkg-reconfigure dash
     EOH
 end
