@@ -53,7 +53,7 @@ end
 # =========================
 
 # /bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash
-execute 'echo dash dash/sh boolean false | debconf-set-selections'
+execute 'echo dash dash/sh boolean true | debconf-set-selections'
 execute 'export DEBIAN_FRONTEND="noninteractive"; dpkg-reconfigure dash'
 
 # =================
