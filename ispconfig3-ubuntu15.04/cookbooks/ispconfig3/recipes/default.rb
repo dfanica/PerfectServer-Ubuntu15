@@ -15,7 +15,7 @@
 # https://www.howtoforge.com/tutorial/perfect-server-ubuntu-15.04-with-apache-php-myqsl-pureftpd-bind-postfix-doveot-and-ispconfig/
 
 # export the DEBIAN_FRONTEND variable
-execute 'export DEBIAN_FRONTEND="noninteractive"'
+execute 'sudo export DEBIAN_FRONTEND="noninteractive"'
 
 
 # =================================================================
