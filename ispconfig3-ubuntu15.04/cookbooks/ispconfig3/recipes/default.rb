@@ -303,7 +303,10 @@ end
 # Remove `<FilesMatch "\.ph(p3?|tml)$">` section from suphp.conf
 template '/etc/apache2/mods-available/suphp.conf' do
     source 'suphp.conf.erb'
-    notifies :restart, 'service[apache2]'
+end
+
+service 'apache2' do
+    action :restart
 end
 
 
