@@ -16,8 +16,10 @@
 
 # export the DEBIAN_FRONTEND variable
 bash 'set variable DEBIAN_FRONTEND to `noninteractive`' do
+    user 'root'
+    group 'root'
     code <<-EOH
-        sudo export DEBIAN_FRONTEND="noninteractive"
+        export DEBIAN_FRONTEND="noninteractive"
     EOH
 end
 
