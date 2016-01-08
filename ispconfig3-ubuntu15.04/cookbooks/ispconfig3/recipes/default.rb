@@ -182,7 +182,7 @@ ruby_block "edit etc hosts" do
     block do
         rc = Chef::Util::FileEdit.new("/etc/clamav/clamd.conf")
         rc.search_file_replace_line(
-            /^AllowSupplementaryGroups /,
+            /AllowSupplementaryGroups /,
             "AllowSupplementaryGroups true"
         )
         rc.write_file
@@ -427,11 +427,110 @@ end
 service "pure-ftpd-mysql" do action :start end
 
 # Add `usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0` to the partition with the mount point /
+# sed -i '/tmpfs/!s/defaults/defaults,usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0/' /etc/fstab
 template '/etc/fstab' do
     source 'fstab.erb'
 end
 
 # enable quota
 execute 'mount -o remount /'
-execute 'quotacheck -avugm'
-execute 'quotaon -avug'
+execute 'quotacheck -avugm > /dev/null 2>&1'
+execute 'quotaon -avug > /dev/null 2>&1'
+
+
+# =========================
+# Install BIND DNS Server
+# =========================
+
+# Install packages
+%w{
+    bind9
+    dnsutils
+}.each do |pkg|
+    package pkg do
+        action :install
+    end
+end
+
+
+# =========================================
+# Install Vlogger, Webalizer, And AWstats
+# =========================================
+
+# Install packages
+%w{
+    vlogger
+    webalizer
+    awstats
+    geoip-database
+    libclass-dbi-mysql-perl
+}.each do |pkg|
+    package pkg do
+        action :install
+    end
+end
+
+file '/etc/cron.d/awstats' do content '' end
+
+
+# =================
+# Install Jailkit
+# =================
+
+# Install packages
+%w{
+    build-essential
+    autoconf
+    automake1.9
+    libtool
+    flex
+    bison
+    debhelper
+    binutils-gold
+}.each do |pkg|
+    package pkg do
+        action :install
+    end
+end
+
+# Jailkit is needed only if you want to chroot SSH users
+# http://olivier.sessink.nl/jailkit/jailkit-2.17.tar.gz
+tar_package 'http://olivier.sessink.nl/jailkit/jailkit-2.17.tar.gz' do
+    prefix '/tmp'
+    creates '/tmp/jailkit'
+end
+
+
+# ==================
+# Install fail2ban
+# ==================
+
+package 'fail2ban' do
+    action :install
+end
+
+service "fail2ban" do
+  supports [ :status => true, :restart => true ]
+  action [ :enable, :start ]
+end
+
+template '/etc/fail2ban/jail.local' do
+    source 'jail.local.erb'
+    owner 'root'
+    group 'root'
+    mode 0400
+end
+
+template '/etc/fail2ban/filter.d/pureftpd.conf' do
+    source 'pureftpd.conf.erb'
+end
+
+template '/etc/fail2ban/filter.d/dovecot-pop3imap.conf' do
+    source 'dovecot-pop3imap.conf.erb'
+end
+
+# istead of 'echo "ignoreregex =" >> /etc/fail2ban/filter.d/postfix-sasl.conf'
+template '/etc/fail2ban/filter.d/postfix-sasl.conf' do
+    source 'postfix-sasl.conf.erb'
+    notifies :restart, "service[fail2ban]"
+end
