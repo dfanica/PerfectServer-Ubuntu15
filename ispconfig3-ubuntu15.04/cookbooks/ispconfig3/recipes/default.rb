@@ -53,7 +53,7 @@ end
 # =========================
 
 # /bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash
-execute 'debconf-set-selections <<< "dash dash/sh boolean false"'
+execute "debconf-set-selections <<< \"dash dash/sh boolean false\""
 execute 'dpkg-reconfigure dash'
 
 # =================
@@ -80,7 +80,7 @@ include_recipe 'sendmail::remove'
     "postfix        postfix/main_mailer_type        select      Internet Site",
     "postfix        postfix/mailname                string      #{node['ispcongif']['hostname']}"
 ].each do |selection|
-    execute "debconf-set-selections <<< #{selection}"
+    execute "debconf-set-selections <<< \"#{selection}\""
 end
 
 %w{
