@@ -317,7 +317,7 @@ end
 # Languages to support: <-- en (English)
 # Missing site list <-- Ok
 [
-    "mailman    mailman/create_site_list    note    en (English)",
+    "mailman    mailman/create_site_list    note    en",
     "mailman    mailman/used_languages      string  Ok"
 ].each do |selection|
     execute "echo #{selection} | debconf-set-selections"
