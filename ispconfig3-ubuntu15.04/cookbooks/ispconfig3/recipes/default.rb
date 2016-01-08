@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: ispconfig3
-# Recipe:: basics
+# Recipe:: default
 #
-# Copyright 2015, Daniel Fanica
+# Copyright 2016, Daniel Fanica
 #
 # All rights reserved
 #
@@ -142,3 +142,32 @@ end
 # ==================================================================
 # Install Amavisd-new, SpamAssassin, And Clamav
 # ==================================================================
+
+include_recipe 'zip'
+
+# Install required packages
+%w{
+    amavisd-new
+    spamassassin
+    clamav
+    clamav-daemon
+    zoo
+    bzip2
+    arj
+    nomarch
+    lzop
+    cabextract
+    apt-listchanges
+    libnet-ldap-perl
+    libauthen-sasl-perl
+    clamav-docs
+    daemon
+    libio-string-perl
+    libio-socket-ssl-perl
+    libnet-ident-perl
+    libnet-dns-perl
+}.each do |pkg|
+    package pkg do
+        action :install
+    end
+end
