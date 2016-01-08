@@ -6,7 +6,7 @@ spawn mysql_secure_installation
 expect \"Enter current password for root (enter for none):\"
 send \"\r\"
 expect \"Set root password?\"
-send \"n\r\"
+send \"y\r\"
 expect \"New password:\"
 send \"<%= @mysql_root_password %>\r\"
 expect \"Re-enter new password:\"
