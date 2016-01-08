@@ -428,16 +428,22 @@ service "pure-ftpd-mysql" do action :start end
 
 # Add `usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0` to the partition with the mount point /
 # sed -i '/tmpfs/!s/defaults/defaults,usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0/' /etc/fstab
-template '/etc/fstab' do
-    source 'fstab.erb'
+execute 'usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0 to /etc/fstab' do
+    command "sed -i '/tmpfs/!s/defaults/defaults,usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0/' /etc/fstab"
+    not_if "cat /etc/fstab | grep ',usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0' | wc -l"
 end
 
-bash 'enable quota' do
-    code <<-EOH
-        mount -o remount /
-        quotacheck -avugm > /dev/null 2>&1
-        quotaon -avug > /dev/null 2>&1
-    EOH
+# enable quota
+execute 'mount -o remount /'
+
+execute 'quotacheck -avugm' do
+    command 'quotacheck -avugm > /dev/null 2>&1'
+    ignore_failure true
+end
+
+execute 'quotaon -avug' do
+    command 'quotaon -avug > /dev/null 2>&1'
+    ignore_failure true
 end
 
 
