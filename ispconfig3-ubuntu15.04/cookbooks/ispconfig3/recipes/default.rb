@@ -129,6 +129,7 @@ template "/tmp/mysql_secure.sh" do
     )
 end
 
+# mysql_secure_installation
 execute 'Securing/Cleaning... Set root password in MariaDB' do
     command "sh /tmp/mysql_secure.sh"
 end
@@ -405,8 +406,8 @@ end
 # Email Address []:<-- Enter your Email Address.
 pureftpd_pem_cert = '/etc/ssl/private/pure-ftpd.pem'
 
-template "/tmp/mysql_secure.sh" do
-    source "mysql_secure.sh.erb"
+template "/tmp/pure_ftpd_ssl_cert.sh" do
+    source "pure_ftpd_ssl_cert.sh.erb"
     variables(
         pureftpd_pem_cert: pureftpd_pem_cert,
         ssl_cert_country: node['ssl_cert']['country'],
@@ -432,3 +433,5 @@ end
 
 # enable quota
 execute 'mount -o remount /'
+execute 'quotacheck -avugm'
+execute 'quotaon -avug'
