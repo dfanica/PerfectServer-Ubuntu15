@@ -60,7 +60,7 @@ execute 'echo dash dash/sh boolean false | debconf-set-selections'
 execute 'reconfigure dash' do
     command 'dpkg-reconfigure dash'
     action :run
-    environment ({'DEBIAN_FRONTEND' => 'noninteractive'})
+    # environment ({'DEBIAN_FRONTEND' => 'noninteractive'})
 end
 
 # =================
