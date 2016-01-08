@@ -8,9 +8,9 @@
 #
 
 
-# ====================
+# ==================
 # Preliminary Note
-# ====================
+# ==================
 # This recipe was made based on this tutorial
 # https://www.howtoforge.com/tutorial/perfect-server-ubuntu-15.04-with-apache-php-myqsl-pureftpd-bind-postfix-doveot-and-ispconfig/
 
@@ -20,9 +20,9 @@ magic_shell_environment 'DEBIAN_FRONTEND' do
 end
 
 
-# =================================================================
+# ===============================================================
 # Edit /etc/apt/sources.list And Update Your Linux Installation
-# =================================================================
+# ===============================================================
 
 # Edit /etc/apt/sources.list. Make sure that the universe and multiverse repositories are enabled.
 template '/etc/apt/sources.list' do
@@ -33,9 +33,9 @@ end
 include_recipe 'hostupgrade::upgrade'
 
 
-# =============================
+# ==============================
 # Synchronize the System Clock
-# =============================
+# ==============================
 
 # Install required packages
 %w{
@@ -50,9 +50,9 @@ include_recipe 'hostupgrade::upgrade'
 end
 
 
-# =========================
+# ==========================
 # Change The Default Shell
-# =========================
+# ==========================
 
 # /bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash
 execute 'echo dash dash/sh boolean false | debconf-set-selections'
@@ -68,14 +68,13 @@ end
 include_recipe 'apparmor'
 
 
-# ==================================================================
+# ===================================================================
 # Install Postfix, Dovecot, MariaDB, phpMyAdmin, rkhunter, binutils
-# ==================================================================
+# ===================================================================
 
 # Stop and disable sendmail
 include_recipe 'sendmail::remove'
 
-# You will be asked the following questions:
 # Create a self-signed SSL certificate? <-- yes
 # Host name: <-- example.com
 # General type of mail configuration: <-- Internet Site
@@ -139,9 +138,9 @@ service 'mysql' do
 end
 
 
-# ==================================================================
+# ===============================================
 # Install Amavisd-new, SpamAssassin, And Clamav
-# ==================================================================
+# ===============================================
 
 include_recipe 'zip'
 
@@ -198,3 +197,157 @@ end
 # start clamav
 execute 'freshclam'
 service 'clamav-daemon' do action :start end
+
+
+# ===================================================================================
+# Install Apache2, PHP5, phpMyAdmin, FCGI, suExec, Pear, mcrypt, Opcode and PHP-FPM
+# ===================================================================================
+
+# Web server to reconfigure automatically: <-- apache2
+# Configure database for phpmyadmin with dbconfig-common? <-- Yes
+# Password of the database's administrative user: <-- MySQL root password here.
+# MySQL application password for phpmyadmin: <-- Press enter
+[
+    "phpmyadmin         phpmyadmin/reconfigure-webserver    multiselect     apache2",
+    "dbconfig-common    dbconfig-common/dbconfig-install    boolean         true",
+    "phpmyadmin         phpmyadmin/mysql/admin-pass         password        #{node['mysql']['root_password']}",
+    "phpmyadmin         phpmyadmin/mysql/app-pass           password"
+].each do |selection|
+    execute "echo #{selection} | debconf-set-selections"
+end
+
+# Install required packages
+%w{
+    apache2
+    apache2-doc
+    apache2-utils
+    libapache2-mod-php5
+    php5
+    php5-common
+    php5-gd
+    php5-mysql
+    php5-imap
+    phpmyadmin
+    php5-cli
+    php5-cgi
+    libapache2-mod-fcgid
+    apache2-suexec
+    php-pear
+    php-auth
+    php5-mcrypt
+    mcrypt
+    php5-imagick
+    imagemagick
+    libapache2-mod-suphp
+    libruby
+    libapache2-mod-python
+    php5-curl
+    php5-intl
+    php5-memcache
+    php5-memcached
+    php5-ming
+    php5-ps
+    php5-pspell
+    php5-recode
+    php5-sqlite
+    php5-tidy
+    php5-xmlrpc
+    php5-xsl
+    php5-apcu
+    memcached
+    libapache2-mod-fastcgi
+    php5-fpm
+}.each do |pkg|
+    package pkg do
+        action :install
+    end
+end
+
+# Enable the Apache modules suexec, rewrite, ssl, actions
+execute 'apache: enable modules suexec, rewrite, ssl, actions' do
+    command 'a2enmod suexec rewrite ssl actions include cgi'
+    ignore_failure true
+end
+
+# ...and include (plus dav, dav_fs, and auth_digest if you want to use WebDAV)
+execute 'apache: enable modules dav, dav_fs, auth_digest' do
+    command 'a2enmod dav_fs dav auth_digest'
+    ignore_failure true
+end
+
+# enable module mod_fastcgi
+execute 'apache: enable mod_fastcgi' do
+    command 'a2enmod actions fastcgi alias'
+    ignore_failure true
+end
+
+# Enable the mcrypt module in PHP
+execute 'php: enable mcrypt module' do
+    command 'php5enmod mcrypt'
+    ignore_failure true
+end
+
+# to host Ruby files with the extension .rb on the web sites created through ISPConfig,
+# we must comment out the line `application/x-ruby rb` in /etc/mime.types
+ruby_block "to enable ruby files on webserver" do
+    block do
+        rc = Chef::Util::FileEdit.new("/etc/mime.types")
+        rc.search_file_replace_line(
+            /^application\/x-ruby/,
+            "# application/x-ruby rb"
+        )
+        rc.write_file
+    end
+end
+
+# Remove `<FilesMatch "\.ph(p3?|tml)$">` section from suphp.conf
+template '/etc/apache2/mods-available/suphp.conf' do
+    source 'suphp.conf.erb'
+    notifies :restart, 'service[apache2]'
+end
+
+
+# =================
+# Install Mailman
+# =================
+
+# Languages to support: <-- en (English)
+# Missing site list <-- Ok
+[
+    "mailman    mailman/create_site_list    note    en (English)",
+    "mailman    mailman/used_languages      string  Ok"
+].each do |selection|
+    execute "echo #{selection} | debconf-set-selections"
+end
+
+package 'mailman' do
+    action :install
+end
+
+# Before we can start Mailman, a first mailing list called mailman must be created
+ispconfig3_mailman_list node['mailman']['list_name'] do
+    email node['mailman']['email']
+    password node['mailman']['password']
+    action :create
+end
+
+# Start the Mailman daemon
+service 'mailman' do
+    action [:enable, :start]
+end
+
+template '/etc/aliases' do
+    source 'aliases.erb'
+end
+
+execute 'newaliases' do
+    notifies :restart, 'service[postfix]'
+end
+
+# enable the Mailman Apache configuration
+link '/etc/apache2/conf-available/mailman.conf' do
+    to '/etc/mailman/apache.conf'
+    link_type :symbolic
+    notifies :restart, 'service[apache2]'
+    notifies :restart, 'service[mailman]'
+end
