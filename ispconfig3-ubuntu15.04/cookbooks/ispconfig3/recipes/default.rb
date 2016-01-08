@@ -15,7 +15,7 @@
 # https://www.howtoforge.com/tutorial/perfect-server-ubuntu-15.04-with-apache-php-myqsl-pureftpd-bind-postfix-doveot-and-ispconfig/
 
 # export the DEBIAN_FRONTEND variable
-execute 'export DEBIAN_FRONTEND="noninteractive"'
+# execute 'export DEBIAN_FRONTEND="noninteractive"'
 
 
 # =================================================================
@@ -54,7 +54,7 @@ end
 
 # /bin/sh is a symlink to /bin/dash, however we need /bin/bash, not /bin/dash
 execute 'echo dash dash/sh boolean false | debconf-set-selections'
-execute 'dpkg-reconfigure dash > /dev/null 2>&1'
+execute 'export DEBIAN_FRONTEND="noninteractive"; dpkg-reconfigure dash'
 
 # =================
 # Disable AppArmor
