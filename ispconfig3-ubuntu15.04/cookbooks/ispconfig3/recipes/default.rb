@@ -49,6 +49,7 @@ include_recipe 'build-essential::default'
 
 # Install required packages
 %w{
+    linux-image-extra-virtual
     debconf-utils
     expect
     ntp
@@ -454,18 +455,18 @@ end
 # enable quota
 execute 'mount -o remount /'
 
-# execute 'turn quota off' do
-#     command 'quotaoff -avug'
-#     ignore_failure true
-# end
-# execute 'check quota' do
-#     command 'quotacheck -avugm'
-#     ignore_failure true
-# end
-# execute 'turn quota on' do
-#     command 'quotaon -avug'
-#     ignore_failure true
-# end
+execute 'turn quota off' do
+    command 'quotaoff -avug'
+    ignore_failure true
+end
+execute 'check quota' do
+    command 'quotacheck -avugm'
+    ignore_failure true
+end
+execute 'turn quota on' do
+    command 'quotaon -avug'
+    ignore_failure true
+end
 
 
 # =========================
@@ -622,7 +623,7 @@ ruby_block "change the default host to localhost" do
     block do
         rc = Chef::Util::FileEdit.new("/etc/roundcube/main.inc.php")
         rc.search_file_replace_line(
-            /^rcmail_config\['default_host'\]/,
+            /^rcmail_config['default_host']/,
             "$rcmail_config['default_host'] = 'localhost';"
         )
         rc.write_file
@@ -656,13 +657,13 @@ template ::File.join(node['ispcongif']['install_path'], 'install', 'autoinstall.
     )
 end
 
-# bash 'Installing ISPConfig3...' do
-#     code <<-EOH
-#         cd #{node['ispcongif']['install_path']}/install
-#         php -q install.php --autoinstall=autoinstall.ini
-#     EOH
-#     not_if { ::File.exists?('/usr/local/ispconfig/server/server.php') }
-# end
+bash 'Installing ISPConfig3...' do
+    code <<-EOH
+        cd #{node['ispcongif']['install_path']}/install
+        php -q install.php --autoinstall=autoinstall.ini
+    EOH
+    # not_if { ::File.exists?('/usr/local/ispconfig/server/server.php') }
+end
 
 # bash 'Updating ISPConfig3...' do
 #     code <<-EOH
