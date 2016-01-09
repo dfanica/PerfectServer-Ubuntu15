@@ -443,7 +443,7 @@ template '/tmp/pure_ftpd_ssl_cert.sh' do
 end
 
 execute 'Create Pure-FTP Certificate' do
-    command '/tmp/pure_ftpd_ssl_cert.sh'
+    command 'sh /tmp/pure_ftpd_ssl_cert.sh'
 end
 
 file pureftpd_pem_cert do
