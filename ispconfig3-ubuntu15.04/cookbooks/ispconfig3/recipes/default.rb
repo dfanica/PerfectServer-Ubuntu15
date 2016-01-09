@@ -382,6 +382,7 @@ end
     pure-ftpd-mysql
     quota
     quotatool
+    linux-image-extra-virtual
 }.each do |pkg|
     package pkg do
         action :install
@@ -443,18 +444,19 @@ service "pure-ftpd-mysql" do action :start end
 
 # Add `usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0` to the partition with the mount point /
 execute 'usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0 to /etc/fstab' do
-    command "sed -i '/tmpfs/!s/defaults/errors=remount-ro,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0/' /etc/fstab"
+    # command "sed -i '/tmpfs/!s/defaults/errors=remount-ro,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0/' /etc/fstab"
+    command "sed -i '/tmpfs/!s/defaults/defaults,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0/' /etc/fstab"
     not_if "cat /etc/fstab | grep ',usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0'"
 end
 
 # enable quota
-execute 'mount -o remount /'
+# execute 'mount -o remount /'
 
-execute 'run quotaon' do
-    command 'quotaon -avug'
-    ignore_failure true
-    not_if 'quotacheck -avugm'
-end
+# execute 'run quotaon' do
+#     command 'quotaon -avug'
+#     ignore_failure true
+#     # not_if 'quotacheck -avugm'
+# end
 
 
 # =========================
