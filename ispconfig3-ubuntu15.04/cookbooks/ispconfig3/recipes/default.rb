@@ -452,15 +452,15 @@ end
 # enable quota
 execute 'mount -o remount /'
 
-execute 'run quotaon' do
+execute 'turn quota off' do
     command 'quotaoff -avug'
     ignore_failure true
 end
-execute 'run quotaon' do
+execute 'check quota' do
     command 'quotacheck -avugm'
     ignore_failure true
 end
-execute 'run quotaon' do
+execute 'turn quota on' do
     command 'quotaon -avug'
     ignore_failure true
 end
