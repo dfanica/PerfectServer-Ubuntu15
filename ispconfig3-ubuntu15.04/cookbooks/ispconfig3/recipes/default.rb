@@ -450,13 +450,20 @@ execute 'usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0 to /etc/fstab' d
 end
 
 # enable quota
-# execute 'mount -o remount /'
+execute 'mount -o remount /'
 
-# execute 'run quotaon' do
-#     command 'quotaon -avug'
-#     ignore_failure true
-#     # not_if 'quotacheck -avugm'
-# end
+execute 'run quotaon' do
+    command 'quotaoff -avug'
+    ignore_failure true
+end
+execute 'run quotaon' do
+    command 'quotacheck -avugm'
+    ignore_failure true
+end
+execute 'run quotaon' do
+    command 'quotaon -avug'
+    ignore_failure true
+end
 
 
 # =========================
