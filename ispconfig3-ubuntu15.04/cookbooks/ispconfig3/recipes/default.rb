@@ -442,9 +442,8 @@ end
 service "pure-ftpd-mysql" do action :start end
 
 # Add `usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0` to the partition with the mount point /
-# sed -i '/tmpfs/!s/defaults/defaults,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0/' /etc/fstab
 execute 'usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0 to /etc/fstab' do
-    command "sed -i '/tmpfs/!s/defaults/defaults,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0/' /etc/fstab"
+    command "sed -i '/tmpfs/!s/defaults/errors=remount-ro,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0/' /etc/fstab"
     not_if "cat /etc/fstab | grep ',usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0'"
 end
 
