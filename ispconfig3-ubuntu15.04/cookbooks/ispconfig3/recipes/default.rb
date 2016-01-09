@@ -26,6 +26,10 @@ directory '/tmp' do
     mode '1777'
 end
 
+package 'linux-image-extra-virtual'
+    action :install
+end
+
 
 # ===============================================================
 # Edit /etc/apt/sources.list And Update Your Linux Installation
@@ -449,20 +453,20 @@ execute 'usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0 to /etc/fstab' d
 end
 
 # enable quota
-execute 'mount -o remount /'
+# execute 'mount -o remount /'
 
-execute 'turn quota off' do
-    command 'quotaoff -avug'
-    ignore_failure true
-end
-execute 'check quota' do
-    command 'quotacheck -avugm'
-    ignore_failure true
-end
-execute 'turn quota on' do
-    command 'quotaon -avug'
-    ignore_failure true
-end
+# execute 'turn quota off' do
+#     command 'quotaoff -avug'
+#     ignore_failure true
+# end
+# execute 'check quota' do
+#     command 'quotacheck -avugm'
+#     ignore_failure true
+# end
+# execute 'turn quota on' do
+#     command 'quotaon -avug'
+#     ignore_failure true
+# end
 
 
 # =========================
@@ -506,7 +510,6 @@ file '/etc/cron.d/awstats' do content '' end
 
 # Install packages
 %w{
-    build-essential
     autoconf
     automake1.9
     libtool
