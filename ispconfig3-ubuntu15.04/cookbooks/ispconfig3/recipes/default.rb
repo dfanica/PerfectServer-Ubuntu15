@@ -26,7 +26,7 @@ directory '/tmp' do
     mode '1777'
 end
 
-package 'linux-image-extra-virtual'
+package 'linux-image-extra-virtual' do
     action :install
 end
 
