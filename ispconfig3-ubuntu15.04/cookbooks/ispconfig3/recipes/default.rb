@@ -11,8 +11,10 @@
 # ==================
 # Preliminary Note
 # ==================
-# This recipe was made based on this tutorial
+# This recipe was possible because of these tutorials
 # https://www.howtoforge.com/tutorial/perfect-server-ubuntu-15.04-with-apache-php-myqsl-pureftpd-bind-postfix-doveot-and-ispconfig/
+# https://www.howtoforge.com/tutorial/ispconfig-install-script-debian/
+# https://serversforhackers.com/video/installing-mysql-with-debconf
 
 # export the DEBIAN_FRONTEND variable
 magic_shell_environment 'DEBIAN_FRONTEND' do
@@ -425,8 +427,8 @@ end
 # Email Address []:<-- Enter your Email Address.
 pureftpd_pem_cert = '/etc/ssl/private/pure-ftpd.pem'
 
-template "/tmp/pure_ftpd_ssl_cert.sh" do
-    source "pure_ftpd_ssl_cert.sh.erb"
+template '/tmp/pure_ftpd_ssl_cert.sh' do
+    source 'pure_ftpd_ssl_cert.sh.erb'
     variables(
         pureftpd_pem_cert: pureftpd_pem_cert,
         ssl_cert_country: node['ssl_cert']['country'],
@@ -438,6 +440,10 @@ template "/tmp/pure_ftpd_ssl_cert.sh" do
         ssl_cert_email_address: node['ssl_cert']['email_address']
     )
     not_if { ::File.exists?(pureftpd_pem_cert) }
+end
+
+execute 'Create Pure-FTP Certificate' do
+    command '/tmp/pure_ftpd_ssl_cert.sh'
 end
 
 file pureftpd_pem_cert do
@@ -454,7 +460,7 @@ end
 
 # enable quota
 execute 'mount -o remount /'
-
+# check if quota is on `quotaon -pa`
 execute 'turn quota off' do
     command 'quotaoff -avug'
     ignore_failure true
