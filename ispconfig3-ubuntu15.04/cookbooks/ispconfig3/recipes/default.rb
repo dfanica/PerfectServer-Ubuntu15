@@ -644,7 +644,7 @@ end
 
 # Download and extract ISPConfig 3 from the latest released version
 tar_extract node['ispcongif']['install_file'] do
-    target_dir '/tmp'
+    target_dir '/root'
     creates node['ispcongif']['install_path']
     not_if { ::File.exists?("#{node['ispcongif']['install_path']}/install/install.php") }
 end
