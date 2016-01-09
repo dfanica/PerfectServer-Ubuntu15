@@ -554,3 +554,111 @@ template '/etc/fail2ban/filter.d/postfix-sasl.conf' do
     source 'postfix-sasl.conf.erb'
     notifies :restart, "service[fail2ban]"
 end
+
+
+# ===========================
+# Install Roundcube Webmail
+# ===========================
+
+# Configure database for roundcube with dbconfig-common? <-- Yes
+# Database type to be used by roundcube: <-- mysql
+# Password of the database's administrative user: <-- Enter your mysql root password here
+# MySQL application password for roundcube: <-- Press enter
+[
+    "roundcube-core roundcube/dbconfig-install boolean true",
+    "roundcube-core roundcube/database-type select mysql",
+    "roundcube-core roundcube/mysql/admin-pass password #{node['mysql']['root_password']}",
+    "roundcube-core roundcube/mysql/app-pass password"
+].each do |selection|
+    execute "echo #{selection} | debconf-set-selections"
+end
+
+# Install packages
+%w{
+    roundcube
+    roundcube-core
+    roundcube-mysql
+    roundcube-plugins
+    roundcube-plugins-extra
+    javascript-common
+    libjs-jquery-mousewheel
+    php-net-sieve
+    tinymce
+}.each do |pkg|
+    package pkg do
+        action :install
+    end
+end
+
+# prevent Roundcube from showing a server name input field in the login form
+ruby_block "remove commented lines from roundcube.conf" do
+    block do
+        rc = Chef::Util::FileEdit.new("/etc/apache2/conf-enabled/roundcube.conf")
+        rc.search_file_replace_line(/^(#|Alias\s).+?$/, "")
+        rc.write_file
+    end
+end
+
+[
+    'Alias /roundcube/program/js/tiny_mce/ /usr/share/tinymce/www/',
+    'Alias /roundcube /var/lib/roundcube',
+    'Alias /webmail/program/js/tiny_mce/ /usr/share/tinymce/www/',
+    'Alias /webmail /var/lib/roundcube'
+].each do |als|
+    execute "sed -i '1i#{als}' /etc/apache2/conf-enabled/roundcube.conf"
+end
+
+# prevent Roundcube from showing a server name input field in the login form
+ruby_block "change the default host to localhost" do
+    block do
+        rc = Chef::Util::FileEdit.new("/etc/roundcube/main.inc.php")
+        rc.search_file_replace_line(
+            /^rcmail_config\['default_host'\]/,
+            "$rcmail_config['default_host'] = 'localhost';"
+        )
+        rc.write_file
+    end
+    notifies :restart, 'service[apache2]'
+end
+
+
+# =====================
+# Install ISPConfig 3
+# =====================
+
+# Download and extract ISPConfig 3 from the latest released version
+tar_extract node['ispcongif']['install_file'] do
+    target_dir '/tmp'
+    creates node['ispcongif']['install_path']
+    not_if { ::File.exists?("#{node['ispcongif']['install_path']}/install/install.php") }
+end
+
+template ::File.join(node['ispcongif']['install_path'], 'install', 'autoinstall.ini') do
+    source 'autoinstall.ini.erb'
+    variables(
+        mysql_root_password: node['mysql']['root_password'],
+        ispcongif_port: node['ispcongif']['port'],
+        ssl_cert_country: node['ssl_cert']['country'],
+        ssl_cert_state: node['ssl_cert']['state'],
+        ssl_cert_locality: node['ssl_cert']['locality'],
+        ssl_cert_organisation: node['ssl_cert']['organisation'],
+        ssl_cert_organisation_unit: node['ssl_cert']['organisation_unit'],
+        ssl_cert_common_name: node['ssl_cert']['common_name']
+    )
+end
+
+# bash 'Installing ISPConfig3...' do
+#     code <<-EOH
+#         cd #{node['ispcongif']['install_path']}/install
+#         php -q install.php --autoinstall=autoinstall.ini
+#     EOH
+#     not_if { ::File.exists?('/usr/local/ispconfig/server/server.php') }
+# end
+
+# bash 'Updating ISPConfig3...' do
+#     code <<-EOH
+#         cd #{node['ispcongif']['install_path']}/install
+#         php -q update.php --autoinstall=autoinstall.ini
+#     EOH
+#     only_if { ::File.exists?('/usr/local/ispconfig/server/server.php') }
+# end
