@@ -382,7 +382,6 @@ end
     pure-ftpd-mysql
     quota
     quotatool
-    linux-image-extra-virtual
 }.each do |pkg|
     package pkg do
         action :install
