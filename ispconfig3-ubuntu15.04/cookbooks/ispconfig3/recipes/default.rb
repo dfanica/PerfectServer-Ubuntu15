@@ -664,7 +664,7 @@ template autoinstall_file do
     )
 end
 
-unless not ::File.exists?("#{node['ispcongif']['install_path']}/install/installed")
+if not ::File.exists?("#{node['ispcongif']['install_path']}/install/installed")
     bash 'Installing ISPConfig3...' do
         code <<-EOH
             cd #{node['ispcongif']['install_path']}/install
