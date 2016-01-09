@@ -669,7 +669,7 @@ bash 'Installing ISPConfig3...' do
         cd #{node['ispcongif']['install_path']}/install
         php -q install.php --autoinstall=autoinstall.ini
     EOH
-    notifies :touch, "file[#{node['ispcongif']['install_path']}/install/installed]", :immediately
+    notifies :create, "file[#{node['ispcongif']['install_path']}/install/installed]", :immediately
     notifies :delete, "file[#{autoinstall_file}]", :immediately
     not_if { ::File.exists?("#{node['ispcongif']['install_path']}/install/installed") }
 end
