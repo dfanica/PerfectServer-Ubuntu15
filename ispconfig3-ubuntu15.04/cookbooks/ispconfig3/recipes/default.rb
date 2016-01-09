@@ -442,19 +442,19 @@ end
 service "pure-ftpd-mysql" do action :start end
 
 # Add `usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0` to the partition with the mount point /
-# sed -i '/tmpfs/!s/defaults/defaults,usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0/' /etc/fstab
-execute 'usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0 to /etc/fstab' do
-    command "sed -i '/tmpfs/!s/defaults/defaults,usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0/' /etc/fstab"
-    not_if "cat /etc/fstab | grep ',usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0'"
+# sed -i '/tmpfs/!s/defaults/defaults,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0/' /etc/fstab
+execute 'usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0 to /etc/fstab' do
+    command "sed -i '/tmpfs/!s/defaults/defaults,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0/' /etc/fstab"
+    not_if "cat /etc/fstab | grep ',usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0'"
 end
 
 # enable quota
 execute 'mount -o remount /'
 
 execute 'run quotaon' do
-    command 'quotaon -avug > /dev/null 2>&1'
+    command 'quotaon -avug'
     ignore_failure true
-    not_if 'quotacheck -avugm > /dev/null 2>&1'
+    not_if 'quotacheck -avugm'
 end
 
 
