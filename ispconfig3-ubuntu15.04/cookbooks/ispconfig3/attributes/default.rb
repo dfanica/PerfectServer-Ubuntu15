@@ -2,7 +2,7 @@
 default['ispcongif'] = {
     'hostname' => 'danielfanica.com',
     'install_file' => 'http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz',
-    'install_path' => '/tmp/ispconfig3_install',
+    'install_path' => '/root/ispconfig3_install',
     'port' => 8080
 }
 

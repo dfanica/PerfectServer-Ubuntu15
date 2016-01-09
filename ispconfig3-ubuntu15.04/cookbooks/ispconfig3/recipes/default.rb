@@ -629,7 +629,7 @@ ruby_block "change the default host to localhost" do
     block do
         rc = Chef::Util::FileEdit.new("/etc/roundcube/main.inc.php")
         rc.search_file_replace_line(
-            /^rcmail_config['default_host']/,
+            /rcmail_config['default_host']/,
             "$rcmail_config['default_host'] = 'localhost';"
         )
         rc.write_file
@@ -649,7 +649,8 @@ tar_extract node['ispcongif']['install_file'] do
     not_if { ::File.exists?("#{node['ispcongif']['install_path']}/install/install.php") }
 end
 
-template ::File.join(node['ispcongif']['install_path'], 'install', 'autoinstall.ini') do
+autoinstall_file = ::File.join(node['ispcongif']['install_path'], 'install', 'autoinstall.ini')
+template autoinstall_file do
     source 'autoinstall.ini.erb'
     variables(
         mysql_root_password: node['mysql']['root_password'],
@@ -668,13 +669,15 @@ bash 'Installing ISPConfig3...' do
         cd #{node['ispcongif']['install_path']}/install
         php -q install.php --autoinstall=autoinstall.ini
     EOH
-    # not_if { ::File.exists?('/usr/local/ispconfig/server/server.php') }
+    notifies :touch, "file[#{node['ispcongif']['install_path']}/install/installed]", :immediately
+    notifies :delete, "file[#{autoinstall_file}]", :immediately
+    not_if { ::File.exists?("#{node['ispcongif']['install_path']}/install/installed") }
 end
 
-# bash 'Updating ISPConfig3...' do
-#     code <<-EOH
-#         cd #{node['ispcongif']['install_path']}/install
-#         php -q update.php --autoinstall=autoinstall.ini
-#     EOH
-#     only_if { ::File.exists?('/usr/local/ispconfig/server/server.php') }
-# end
+bash 'Updating ISPConfig3...' do
+    code <<-EOH
+        cd #{node['ispcongif']['install_path']}/install
+        php -q update.php --autoinstall=autoinstall.ini
+    EOH
+    only_if { ::File.exists?(autoinstall_file) }
+end
