@@ -39,6 +39,9 @@ end
 # apt-get update && upgrade
 include_recipe 'hostupgrade::upgrade'
 
+# install build-essential
+include_recipe 'build-essential::default'
+
 
 # ==============================
 # Synchronize the System Clock
