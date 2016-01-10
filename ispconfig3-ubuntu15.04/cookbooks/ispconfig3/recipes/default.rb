@@ -467,9 +467,7 @@ end
 
 # enable quota
 execute 'mount -o remount /'
-directory '/tmp' do
-    mode '1777'
-end
+
 # check if quota is on `quotaon -pa`
 # execute 'turn quota off' do
 #     command 'quotaoff -avug'
@@ -545,6 +543,9 @@ end
 tar_package 'http://olivier.sessink.nl/jailkit/jailkit-2.17.tar.gz' do
     prefix '/tmp'
     creates '/tmp/jailkit'
+end
+directory '/tmp' do
+    mode '1777'
 end
 
 
