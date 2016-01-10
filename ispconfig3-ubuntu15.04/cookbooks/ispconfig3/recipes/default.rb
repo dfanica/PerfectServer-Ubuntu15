@@ -470,18 +470,19 @@ end
 # enable quota
 execute 'mount -o remount /'
 # check if quota is on `quotaon -pa`
-execute 'turn quota off' do
-    command 'quotaoff -avug'
-    ignore_failure true
-end
+# execute 'turn quota off' do
+#     command 'quotaoff -avug'
+#     ignore_failure true
+# end
 execute 'check quota' do
     command 'quotacheck -avugm'
     ignore_failure true
 end
-execute 'turn quota on' do
-    command 'quotaon -avug'
-    ignore_failure true
-end
+# system needs a restart, so this is no longer required
+# execute 'turn quota on' do
+#     command 'quotaon -avug'
+#     ignore_failure true
+# end
 
 
 # =========================
