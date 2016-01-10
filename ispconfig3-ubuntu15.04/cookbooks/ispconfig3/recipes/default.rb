@@ -103,9 +103,9 @@ include_recipe 'sendmail::remove'
 # System mail name: <-- example.com
 [
     "dovecot-core dovecot-core/create-ssl-cert boolean true",
-    "dovecot-core dovecot-core/ssl-cert-name string #{node['ispcongif']['hostname']}",
+    "dovecot-core dovecot-core/ssl-cert-name string #{node['ispconfig']['hostname']}",
     "postfix postfix/main_mailer_type select Internet Site",
-    "postfix postfix/mailname string #{node['ispcongif']['hostname']}"
+    "postfix postfix/mailname string #{node['ispconfig']['hostname']}"
 ].each do |selection|
     execute "echo #{selection} | debconf-set-selections"
 end
@@ -640,18 +640,18 @@ end
 # =====================
 
 # Download and extract ISPConfig 3 from the latest released version
-tar_extract node['ispcongif']['install_file'] do
+tar_extract node['ispconfig']['install_file'] do
     target_dir '/root'
-    creates node['ispcongif']['install_path']
-    not_if { ::File.exists?("#{node['ispcongif']['install_path']}/install/install.php") }
+    creates node['ispconfig']['install_path']
+    not_if { ::File.exists?("#{node['ispconfig']['install_path']}/install/install.php") }
 end
 
-autoinstall_file = ::File.join(node['ispcongif']['install_path'], 'install', 'autoinstall.ini')
+autoinstall_file = ::File.join(node['ispconfig']['install_path'], 'install', 'autoinstall.ini')
 template autoinstall_file do
     source 'autoinstall.ini.erb'
     variables(
         mysql_root_password: node['mysql']['root_password'],
-        ispcongif_port: node['ispcongif']['port'],
+        ispcongif_port: node['ispconfig']['port'],
         ssl_cert_country: node['ssl_cert']['country'],
         ssl_cert_state: node['ssl_cert']['state'],
         ssl_cert_locality: node['ssl_cert']['locality'],
@@ -661,10 +661,10 @@ template autoinstall_file do
     )
 end
 
-if not ::File.exists?("#{node['ispcongif']['install_path']}/install/installed")
+if not ::File.exists?("#{node['ispconfig']['install_path']}/install/installed")
     bash 'Installing ISPConfig3...' do
         code <<-EOH
-            cd #{node['ispcongif']['install_path']}/install
+            cd #{node['ispconfig']['install_path']}/install
             php -q install.php --autoinstall=autoinstall.ini
         EOH
     end
@@ -673,14 +673,14 @@ if not ::File.exists?("#{node['ispcongif']['install_path']}/install/installed")
         action :delete
     end
 
-    file "#{node['ispcongif']['install_path']}/install/installed" do
+    file "#{node['ispconfig']['install_path']}/install/installed" do
         action :create
     end
 end
 
 bash 'Updating ISPConfig3...' do
     code <<-EOH
-        cd #{node['ispcongif']['install_path']}/install
+        cd #{node['ispconfig']['install_path']}/install
         php -q update.php --autoinstall=autoinstall.ini
     EOH
     only_if { ::File.exists?(autoinstall_file) }
@@ -691,17 +691,17 @@ end
 # Updated ISPConfig 3 Theme [ispc-clean]
 # ========================================
 
-if not ::File.exists?("#{node['ispcongif']['install_path']}/install/ispc-clean")
+if not ::File.exists?("#{node['ispconfig']['install_path']}/install/ispc-clean")
     # clone repo to a temp location
-    git node['ispconfig']['ispc_clean_tmp_path'] do
-        repository node['ispconfig']['ispc_clean_repo']
+    git node['ispconfig']['ispc_clean']['tmp_path'] do
+        repository node['ispconfig']['ispc_clean']['repo']
     end
 
     # copy theme files to ispconfig/interface
-    execute "copy #{node['ispconfig']['ispc_clean_tmp_path']}/interface/web /usr/local/ispconfig/interface/"
+    execute "copy #{node['ispconfig']['ispc_clean']['tmp_path']}/interface/web /usr/local/ispconfig/interface/"
 
     # Import the SQL file inside of the SQL folder to setup the table structure in the ISPConfig Database
-    execute "mysql < #{node['ispconfig']['ispc_clean_tmp_path']}/sql/ispc-clean.sql"
+    execute "mysql < #{node['ispconfig']['ispc_clean']['tmp_path']}/sql/ispc-clean.sql"
 
     # Edit /usr/local/ispconfig/interface/lib/config.inc.php default theme to ispc-clean
     execute 'Change default theme to ispc-clean' do
@@ -709,7 +709,7 @@ if not ::File.exists?("#{node['ispcongif']['install_path']}/install/ispc-clean")
         not_if "cat /etc/fstab | grep 'ispc-clean'"
     end
 
-    file "#{node['ispcongif']['install_path']}/install/ispc-clean" do
+    file "#{node['ispconfig']['install_path']}/install/ispc-clean" do
         action :create
     end
 end
