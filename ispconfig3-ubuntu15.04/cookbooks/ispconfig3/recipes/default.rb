@@ -544,9 +544,6 @@ tar_package 'http://olivier.sessink.nl/jailkit/jailkit-2.17.tar.gz' do
     prefix '/tmp/jailkit'
     creates '/tmp/jailkit/install'
 end
-directory '/tmp' do
-    mode '1777'
-end
 
 
 # ==================
