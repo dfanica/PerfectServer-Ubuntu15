@@ -24,8 +24,6 @@ end
 
 # Force owner and permissions to `/tmp` to prevent issues along the way
 directory '/tmp' do
-    owner 'root'
-    group 'root'
     mode '1777'
 end
 
