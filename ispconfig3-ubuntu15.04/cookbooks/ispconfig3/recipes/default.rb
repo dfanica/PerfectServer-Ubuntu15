@@ -12,9 +12,10 @@
 # Preliminary Note
 # ==================
 # This recipe was possible because of these tutorials
-# https://www.howtoforge.com/tutorial/perfect-server-ubuntu-15.04-with-apache-php-myqsl-pureftpd-bind-postfix-doveot-and-ispconfig/
-# https://www.howtoforge.com/tutorial/ispconfig-install-script-debian/
+# https://www.howtoforge.com/tutorial/perfect-server-ubuntu-15.04-with-apache-php-myqsl-pureftpd-bind-postfix-doveot-and-ispconfig
+# https://www.howtoforge.com/tutorial/ispconfig-install-script-debian
 # https://serversforhackers.com/video/installing-mysql-with-debconf
+# https://drewclardy.com/2013/03/updated-ispconfig-3-theme
 
 # export the DEBIAN_FRONTEND variable
 magic_shell_environment 'DEBIAN_FRONTEND' do
@@ -26,6 +27,14 @@ directory '/tmp' do
     owner 'root'
     group 'root'
     mode '1777'
+end
+
+# create bash script to copy folders easier
+template '/bin/copy' do
+    source 'copy.erb'
+    owner 'root'
+    group 'root'
+    mode '1755'
 end
 
 
@@ -454,7 +463,6 @@ service "pure-ftpd-mysql" do action :start end
 
 # Add `usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0` to the partition with the mount point /
 execute 'usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0 to /etc/fstab' do
-    # command "sed -i '/tmpfs/!s/defaults/errors=remount-ro,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0/' /etc/fstab"
     command "sed -i '/tmpfs/!s/defaults/defaults,usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0/' /etc/fstab"
     not_if "cat /etc/fstab | grep ',usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0'"
 end
@@ -675,4 +683,32 @@ bash 'Updating ISPConfig3...' do
         php -q update.php --autoinstall=autoinstall.ini
     EOH
     only_if { ::File.exists?(autoinstall_file) }
+end
+
+
+# ========================================
+# Updated ISPConfig 3 Theme [ispc-clean]
+# ========================================
+
+if not ::File.exists?("#{node['ispcongif']['install_path']}/install/ispc-clean")
+    # clone repo to a temp location
+    git node['ispconfig3']['ispc_clean']['tmp_path'] do
+        repository node['ispconfig3']['ispc_clean']['repo']
+    end
+
+    # copy theme files to ispconfig/interface
+    execute "copy #{node['ispconfig3']['ispc_clean']['tmp_path']}/interface/web /usr/local/ispconfig/interface/"
+
+    # Import the SQL file inside of the SQL folder to setup the table structure in the ISPConfig Database
+    execute "mysql < #{node['ispconfig3']['ispc_clean']['tmp_path']}/sql/ispc-clean.sql"
+
+    # Edit /usr/local/ispconfig/interface/lib/config.inc.php default theme to ispc-clean
+    execute 'Change default theme to ispc-clean' do
+        command "sed -i '/tmpfs/!s/defaults/ispc-clean/' /usr/local/ispconfig/interface/lib/config.inc.php"
+        not_if "cat /etc/fstab | grep 'ispc-clean'"
+    end
+
+    file "#{node['ispcongif']['install_path']}/install/ispc-clean" do
+        action :create
+    end
 end
