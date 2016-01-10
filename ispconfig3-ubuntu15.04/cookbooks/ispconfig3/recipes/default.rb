@@ -467,6 +467,9 @@ end
 
 # enable quota
 execute 'mount -o remount /'
+directory '/tmp' do
+    mode '1777'
+end
 # check if quota is on `quotaon -pa`
 # execute 'turn quota off' do
 #     command 'quotaoff -avug'
