@@ -693,15 +693,15 @@ end
 
 if not ::File.exists?("#{node['ispcongif']['install_path']}/install/ispc-clean")
     # clone repo to a temp location
-    git node['ispconfig3']['ispc_clean_tmp_path'] do
-        repository node['ispconfig3']['ispc_clean_repo']
+    git node['ispconfig']['ispc_clean']['tmp_path'] do
+        repository node['ispconfig']['ispc_clean']['repo']
     end
 
     # copy theme files to ispconfig/interface
-    execute "copy #{node['ispconfig3']['ispc_clean_tmp_path']}/interface/web /usr/local/ispconfig/interface/"
+    execute "copy #{node['ispconfig']['ispc_clean']['tmp_path']}/interface/web /usr/local/ispconfig/interface/"
 
     # Import the SQL file inside of the SQL folder to setup the table structure in the ISPConfig Database
-    execute "mysql < #{node['ispconfig3']['ispc_clean_tmp_path']}/sql/ispc-clean.sql"
+    execute "mysql < #{node['ispconfig']['ispc_clean']['tmp_path']}/sql/ispc-clean.sql"
 
     # Edit /usr/local/ispconfig/interface/lib/config.inc.php default theme to ispc-clean
     execute 'Change default theme to ispc-clean' do

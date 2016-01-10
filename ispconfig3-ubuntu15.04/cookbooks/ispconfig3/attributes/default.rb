@@ -4,8 +4,10 @@ default['ispcongif'] = {
     'install_file' => 'http://www.ispconfig.org/downloads/ISPConfig-3-stable.tar.gz',
     'install_path' => '/root/ispconfig3_install',
     'port' => 8080,
-    'ispc_clean_tmp_path' => '/tmp/ispc-clean',
-    'ispc_clean_repo' => 'git@github.com:dfanica/ISPConfig_Clean-3.0.5.git'
+    'ispc_clean' => {
+        'tmp_path' => '/tmp/ispc-clean',
+        'repo' => 'git@github.com:dfanica/ISPConfig_Clean-3.0.5.git'
+    }
 }
 
 #Update System and Upgrade
