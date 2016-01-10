@@ -607,21 +607,8 @@ end
 end
 
 # prevent Roundcube from showing a server name input field in the login form
-ruby_block "remove commented lines from roundcube.conf" do
-    block do
-        rc = Chef::Util::FileEdit.new("/etc/apache2/conf-enabled/roundcube.conf")
-        rc.search_file_replace_line(/^(#|Alias\s).+?$/, "")
-        rc.write_file
-    end
-end
-
-[
-    'Alias /roundcube/program/js/tiny_mce/ /usr/share/tinymce/www/',
-    'Alias /roundcube /var/lib/roundcube',
-    'Alias /webmail/program/js/tiny_mce/ /usr/share/tinymce/www/',
-    'Alias /webmail /var/lib/roundcube'
-].each do |als|
-    execute "sed -i '1i#{als}' /etc/apache2/conf-enabled/roundcube.conf"
+template '/etc/apache2/conf-enabled/roundcube.conf' do
+    source 'roundcube.conf.erb'
 end
 
 # prevent Roundcube from showing a server name input field in the login form
@@ -629,7 +616,7 @@ ruby_block "change the default host to localhost" do
     block do
         rc = Chef::Util::FileEdit.new("/etc/roundcube/main.inc.php")
         rc.search_file_replace_line(
-            /rcmail_config['default_host']/,
+            /rcmail_config..default_host/,
             "$rcmail_config['default_host'] = 'localhost';"
         )
         rc.write_file
