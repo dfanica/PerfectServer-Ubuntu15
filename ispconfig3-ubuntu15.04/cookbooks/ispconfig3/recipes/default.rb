@@ -473,10 +473,10 @@ execute 'mount -o remount /'
 #     command 'quotaoff -avug'
 #     ignore_failure true
 # end
-execute 'check quota' do
-    command 'quotacheck -avugm'
-    ignore_failure true
-end
+# execute 'check quota' do
+#     command 'quotacheck -avugm'
+#     ignore_failure true
+# end
 # system needs a restart, so this is no longer required
 # execute 'turn quota on' do
 #     command 'quotaon -avug'
@@ -704,7 +704,7 @@ if not ::File.exists?("#{node['ispconfig']['install_path']}/install/ispc-clean")
 
     # Edit /usr/local/ispconfig/interface/lib/config.inc.php default theme to ispc-clean
     execute 'Change default theme to ispc-clean' do
-        command "sed -i '/tmpfs/!s/defaults/ispc-clean/' /usr/local/ispconfig/interface/lib/config.inc.php"
+        command "sed -i '/tmpfs/!s/default/ispc-clean/' /usr/local/ispconfig/interface/lib/config.inc.php"
         not_if "cat /etc/fstab | grep 'ispc-clean'"
     end
 
