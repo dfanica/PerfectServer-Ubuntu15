@@ -538,6 +538,9 @@ file '/etc/cron.d/awstats' do content '' end
     end
 end
 
+directory '/tmp' do
+    mode '1777'
+end
 # Jailkit is needed only if you want to chroot SSH users
 # http://olivier.sessink.nl/jailkit/jailkit-2.17.tar.gz
 tar_package 'http://olivier.sessink.nl/jailkit/jailkit-2.17.tar.gz' do
