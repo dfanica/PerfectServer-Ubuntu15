@@ -444,6 +444,7 @@ end
 
 execute 'Create Pure-FTP Certificate' do
     command 'sh /tmp/pure_ftpd_ssl_cert.sh'
+    not_if { ::File.exists?(pureftpd_pem_cert) }
 end
 
 file pureftpd_pem_cert do
