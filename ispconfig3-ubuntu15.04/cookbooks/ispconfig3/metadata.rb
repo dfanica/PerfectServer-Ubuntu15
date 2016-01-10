@@ -26,6 +26,7 @@ version          '0.1.0'
 
 depends          'apt'
 depends          'build-essential'
+depends          'dmg'
 depends          'magic_shell'
 depends          'hostupgrade'
 depends          'apparmor'
