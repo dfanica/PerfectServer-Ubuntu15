@@ -541,9 +541,8 @@ end
 # Jailkit is needed only if you want to chroot SSH users
 # http://olivier.sessink.nl/jailkit/jailkit-2.17.tar.gz
 tar_package 'http://olivier.sessink.nl/jailkit/jailkit-2.17.tar.gz' do
-    prefix '/tmp'
-    creates '/tmp/jailkit'
-    mode 1777
+    prefix '/tmp/jailkit'
+    creates '/tmp/jailkit/install'
 end
 directory '/tmp' do
     mode '1777'
