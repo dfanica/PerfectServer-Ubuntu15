@@ -13,6 +13,7 @@
 # ==================
 # This recipe was possible because of these tutorials
 # https://www.howtoforge.com/tutorial/perfect-server-ubuntu-15.04-with-apache-php-myqsl-pureftpd-bind-postfix-doveot-and-ispconfig
+# https://www.howtoforge.com/how-to-use-multiple-php-versions-php-fpm-and-fastcgi-with-ispconfig-3-ubuntu-12.10
 # https://www.howtoforge.com/tutorial/ispconfig-install-script-debian
 # https://serversforhackers.com/video/installing-mysql-with-debconf
 # https://drewclardy.com/2013/03/updated-ispconfig-3-theme
@@ -465,23 +466,8 @@ execute 'usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0 to /etc/fstab' d
     not_if "cat /etc/fstab | grep ',usrjquota=quota.user,grpjquota=quota.group,jqfmt=vfsv0'"
 end
 
-# enable quota
+# enable quota, requires restart!!!
 execute 'mount -o remount /'
-
-# check if quota is on `quotaon -pa`
-# execute 'turn quota off' do
-#     command 'quotaoff -avug'
-#     ignore_failure true
-# end
-# execute 'check quota' do
-#     command 'quotacheck -avugm'
-#     ignore_failure true
-# end
-# system needs a restart, so this is no longer required
-# execute 'turn quota on' do
-#     command 'quotaon -avug'
-#     ignore_failure true
-# end
 
 
 # =========================
